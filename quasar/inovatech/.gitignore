@@ -2,6 +2,10 @@
 .thumbs.db
 node_modules
 
+# Dev
+package-lock.json
+.npmrc
+
 # Quasar core related directories
 .quasar
 /dist
