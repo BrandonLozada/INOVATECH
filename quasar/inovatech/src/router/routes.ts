@@ -6,6 +6,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', name: 'Home', component: () => import('pages/IndexPage.vue') },
+      // TODO: La página de la acción de crear cuenta es ejecutada por un administrador y pasaría a ser un formulario, procedimental.
       { path: '/signup', component: () => import('pages/SignUp.vue') },
       { path: '/signin', component: () => import('pages/SignIn.vue') },
       { path: '/assistance-control', component: () => import('pages/FingerprintAttendance.vue') },
