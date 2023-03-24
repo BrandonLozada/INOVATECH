@@ -21,7 +21,34 @@
       <q-item-label class="bg-grey-3 q-py-lg"
         header
       >
-        Hola Brandon
+        <div class="row">
+          <span>¡Hola, bienvenido!</span>
+            <span class="col-12 q-pt-md">Brandon Lozada Cárdenas</span>
+            <span class="col-12">Súper administrador</span>
+        </div>
+
+      </q-item-label>
+
+      <q-item-label
+        header
+        class="text-grey-9"
+      >
+        Mi espacio
+      </q-item-label>
+
+      <EssentialLink
+        v-for="item in myProfileNavigationMenu"
+        :key="item.title"
+        v-bind="item"
+      />
+
+      <q-separator></q-separator>
+
+      <q-item-label
+        header
+        class="text-grey-9"
+      >
+        Módulos
       </q-item-label>
 
       <EssentialLink
@@ -69,95 +96,120 @@ withDefaults(defineProps<NavigationMenuProps>(), {
   modelValue: false,
 });
 
-const authNavigationMenu: EssentialLinkProps[] = [
+const myProfileNavigationMenu: EssentialLinkProps[] = [
   {
-    title: 'Categorias',
-    icon: 'category',
+    title: 'Mi perfil',
+    icon: 'person',
     meta: {
-      slug: '/categories',
-    }
+      slug: '/my-profile',
+    },
+    children: [
+      {
+        title: 'Datos de cuenta',
+        icon: 'account_circle',
+        meta: {
+          slug: '/my-account-data',
+        }
+      },
+      {
+        title: 'Información personal | empleado',
+        icon: 'badge',
+        meta: {
+          slug: '/my-personal-information',
+        }
+      },
+      {
+        title: 'Domicilio',
+        icon: 'mdi-home-map-marker',
+        meta: {
+          slug: '/my-address',
+        }
+      },
+    ]
   },
   {
-    title: 'Ofertas',
-    icon: 'mdi-sale',
-    meta: {
-      slug: '/discounts',
-    }
-  },
-  {
-    title: 'Recomendaciones',
-    icon: 'recommend',
-    meta: {
-      slug: '/recommendations',
-    }
-  },
-  {
-    title: 'Notificaciones',
+    title: 'Mis notificaciones',
     icon: 'notifications',
     meta: {
       slug: '/my-notifications',
     }
   },
   {
-    title: 'Valoraciones',
-    icon: 'stars',
+    title: 'Mis solicitudes',
+    icon: 'mdi-format-list-checks',
     meta: {
-      slug: '/my-valuations',
+      slug: '/my-requests',
     }
   }
 ];
 
-const noAuthNavigationMenu: EssentialLinkProps[] = [
+const authNavigationMenu: EssentialLinkProps[] = [
   {
-    title: 'Categorias',
-    icon: 'category',
+    title: 'Asistencia por lector de huella',
+    icon: 'fingerprint',
     meta: {
-      slug: '/categories',
+      slug: '/fingerprint-attendance',
     }
   },
   {
-    title: 'Ofertas',
-    icon: 'mdi-sale',
+    title: 'Control de asistencia',
+    icon: 'supervisor_account',
     meta: {
-      slug: '/discounts',
+      slug: '/attendance-control',
     }
   },
   {
-    title: 'Recomendaciones',
-    icon: 'recommend',
+    title: 'Gestión de usuarios',
+    icon: 'manage_accounts',
     meta: {
-      slug: '/recommendations',
+      slug: '/user-management',
     }
-  }
+  },
+  {
+    title: 'Listado de empleados',
+    icon: 'groups',
+    meta: {
+      slug: '/employee-list',
+    }
+  },
+  {
+    title: 'Solicitudes',
+    icon: 'mdi-format-list-checks',
+    meta: {
+      slug: '/requests',
+    }
+  },
+  {
+    title: 'Gestión de departamentos | Jefatura',
+    icon: 'supervised_user_circle',
+    meta: {
+      slug: '/department-management',
+    }
+  },
 ];
 
 const myNavigationMenu: EssentialLinkProps[] = [
   {
-    title: 'Favoritos',
-    icon: 'favorite',
+    title: 'Agregar usuario',
+    icon: 'person_add',
     meta: {
-      slug: '/my-favorites',
+      slug: '/forms/user',
     }
   },
   {
-    title: 'Guardados',
-    icon: 'book',
+    title: 'Solicitud de vacación',
+    icon: 'mdi-calendar-question',
     meta: {
-      slug: '/my-bookmarks',
+      slug: '/forms/vacation_request',
+      // slug: '/vacation_request',
     }
   },
   {
-    title: 'Compras',
-    icon: 'shopping_bag',
+    title: 'Solicitud de permiso',
+    icon: 'mdi-comment-question-outline',
     meta: {
-      slug: '/my-purchases',
-    }
-  },
-  {
-    title: 'Lista de deseos',
-    icon: 'collections_bookmark',
-    meta: {
-      slug: '/my-wishlists',
+      slug: '/forms/permit_application',
+      // slug: '/permit_application',
     }
   }
 ];
@@ -182,46 +234,6 @@ const especialNavigationMenu: EssentialLinkProps[] = [
     meta: {
       slug: '/help',
     }
-  }
-];
-
-const myProfileNavigationMenu: EssentialLinkProps[] = [
-  {
-    title: 'Inicio',
-    icon: 'home',
-    meta: {
-      slug: '/',
-    }
-  },
-  {
-    title: 'Mi perfil',
-    icon: 'person',
-    meta: {
-      slug: '/my-profile',
-    },
-    children: [
-      {
-        title: 'Datos personales',
-        icon: 'business',
-        meta: {
-          slug: '/personal-information',
-        }
-      },
-      {
-        title: 'Direcciones',
-        icon: 'home',
-        meta: {
-          slug: '/my-addreses',
-        }
-      },
-      {
-        title: 'Mis formas de pago',
-        icon: 'payments',
-        meta: {
-          slug: '/my-payments',
-        }
-      }
-    ]
   }
 ];
 </script>
