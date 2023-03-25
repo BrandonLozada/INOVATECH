@@ -1,9 +1,7 @@
 <template>
-  <q-header elevated class="q-px-sm"
-            v-bind:style="$q.screen.lt.md ? 'min-height: 65px;' : 'min-height: 79px;'">
+  <q-header elevated class="q-px-sm">
 
-    <q-toolbar class="q-py-none justify-between"
-               v-bind:style="$q.screen.lt.md ? 'height: 65px;' : 'height: 79px;'">
+    <q-toolbar class="q-py-none justify-between">
       <q-btn
         flat
         dense
@@ -15,6 +13,7 @@
         <q-tooltip :delay="3000" anchor="bottom middle" self="top left">Menú</q-tooltip>
       </q-btn>
 
+<!-- TODO: Poner el logo más chico. Dividir el logo 64*64 y las letras de 128*64-->
       <q-toolbar-title>
         <q-btn
           to="/"
