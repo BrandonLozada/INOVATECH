@@ -45,6 +45,13 @@
         required
       />
 
+      <EntryBlock
+        v-model="formData.celular"
+        label="Número de celular"
+        field_type="tel"
+        required
+      />
+
       <q-item-label class="q-py-sm text-h6 text-weight-regular text-grey-9">Información laboral</q-item-label>
 
       <EntryBlock
@@ -131,13 +138,12 @@ const formData = ref({
   segundo_apellido: '',
   fecha_nacimiento: '',
   sexo: '',
+  celular: '',
   nomina: '',
   fecha_ingreso: '',
   fecha_egreso: '',
-
   id_puesto: '',
   id_departamento: '',
-  // id_jefe: '',
 })
 
 const showNotification = (

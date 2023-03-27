@@ -28,16 +28,9 @@
         @show-password="showPassword = !showPassword"
       />
 
-      <EntryBlock
-        class="q-pt-lg"
-        v-model="formData.celular"
-        label="Número de celular"
-        field_type="tel"
-        required
-      />
-
       <!-- TODO: Este tiene que ser un radio button, por default es 1 = activo, 0 = inactivo.-->
       <EntryBlock
+        class="q-pt-lg"
         v-model="formData.es_activo"
         label="Activo"
         field_type="text"
@@ -88,7 +81,7 @@ const showPassword = ref<boolean>(false);
 const formData = ref({
   correo: '',
   contrasenia: '',
-  celular: '',
+  // celular: '',
   es_activo: '',
   // fecha_registro: '',
   id_rol: '',
