@@ -4,7 +4,7 @@
       <div class="q-pa-sm text-center">
         <div class="q-pt-sm">
           <div class="text-center">
-            <p style="font-size: 30px; margin: 0 0 2px 0;">Mi domicilio</p>
+            <p style="font-size: 30px; margin: 0 0 2px 0;">Mi perfil</p>
             <p class="text-grey-8" style="font-size: 0.875rem; font-weight: 400;">Consulta y comprueba que tus datos estén actualizados.</p>
           </div>
         </div>
@@ -12,7 +12,7 @@
 
       <q-card class="my-card col-12">
         <q-item-label header class="text-black text-weight-regular"
-                      style="font-weight: 500; font-size: 1rem; margin: 2px;">Domicilio
+                      style="font-weight: 500; font-size: 1rem; margin: 2px;">Datos personales
         </q-item-label>
 
         <q-btn
@@ -24,127 +24,71 @@
           style="top: 0; right: 15px; transform: translateY(15px);"
         ></q-btn>
 
-        <q-item v-if="myAddress.calle != null">
+        <q-item v-if="myUserData.nombre_completo != null">
           <q-item-section class="col-3">
             <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
-              Calle
+              Nombre completo
             </q-item-label>
           </q-item-section>
 
           <q-item-section>
-            <q-item-label class="q-mt-sm q-ml-lg text-grey-10"> {{ myAddress.calle }}</q-item-label>
+            <q-item-label class="q-mt-sm q-ml-lg text-grey-10"> {{ myUserData.nombre_completo }}</q-item-label>
           </q-item-section>
         </q-item>
 
         <q-separator class="q-ml-md"></q-separator>
 
-        <q-item v-if="myAddress.numero_interior != null">
+        <q-item v-if="myUserData.fecha_nacimiento != null">
           <q-item-section class="col-3">
             <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
-              Número interior
+              Fecha de nacimiento
             </q-item-label>
           </q-item-section>
 
           <q-item-section>
-            <q-item-label class="q-mt-sm q-ml-lg text-grey-10">{{ myAddress.numero_interior }}</q-item-label>
+            <q-item-label class="q-mt-sm q-ml-lg text-grey-10">{{ myUserData.fecha_nacimiento }}</q-item-label>
           </q-item-section>
         </q-item>
 
         <q-separator class="q-ml-md"></q-separator>
 
-        <q-item v-if="myAddress.numero_exterior != null">
+        <q-item v-if="myUserData.sexo != null">
           <q-item-section class="col-3">
             <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
-              Número exterior
+              Sexo
             </q-item-label>
           </q-item-section>
 
           <q-item-section>
-            <q-item-label class="q-mt-sm q-ml-lg text-grey-10">{{ myAddress.numero_exterior }}</q-item-label>
+            <q-item-label class="q-mt-sm q-ml-lg text-grey-10">{{ myUserData.sexo }}</q-item-label>
           </q-item-section>
         </q-item>
 
         <q-separator class="q-ml-md"></q-separator>
 
-        <q-item v-if="myAddress.entre_calles_1 != null && myAddress.entre_calles_2 != null">
+        <q-item v-if="myUserData.celular != null">
           <q-item-section class="col-3">
             <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
-              Entre calles
+              Celular
             </q-item-label>
           </q-item-section>
 
           <q-item-section>
-            <q-item-label class="q-mt-sm q-ml-lg text-grey-10"> {{ myAddress.entre_calles_1 }} y {{ myAddress.entre_calles_2 }}</q-item-label>
+            <q-item-label class="q-mt-sm q-ml-lg text-grey-10">{{ myUserData.celular }}</q-item-label>
           </q-item-section>
         </q-item>
 
         <q-separator class="q-ml-md"></q-separator>
 
-        <q-item v-if="myAddress.codigo_postal != null">
+        <q-item v-if="myUserData.correo != null">
           <q-item-section class="col-3">
             <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
-              Código postal
+              Correo
             </q-item-label>
           </q-item-section>
 
           <q-item-section>
-            <q-item-label class="q-mt-sm q-ml-lg text-grey-10">{{ myAddress.codigo_postal }}</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-separator class="q-ml-md"></q-separator>
-
-        <q-item v-if="myAddress.colonia != null">
-          <q-item-section class="col-3">
-            <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
-              Colonia
-            </q-item-label>
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label class="q-mt-sm q-ml-lg text-grey-10">{{ myAddress.colonia }}</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-separator class="q-ml-md"></q-separator>
-
-        <q-item v-if="myAddress.ciudad != null">
-          <q-item-section class="col-3">
-            <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
-              Ciudad
-            </q-item-label>
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label class="q-mt-sm q-ml-lg text-grey-10">{{ myAddress.ciudad }}</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-separator class="q-ml-md"></q-separator>
-
-        <q-item v-if="myAddress.estado != null">
-          <q-item-section class="col-3">
-            <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
-              Estado
-            </q-item-label>
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label class="q-mt-sm q-ml-lg text-grey-10">{{ myAddress.estado }}</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-separator class="q-ml-md"></q-separator>
-
-        <q-item v-if="myAddress.pais != null">
-          <q-item-section class="col-3">
-            <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
-              País
-            </q-item-label>
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label class="q-mt-sm q-ml-lg text-grey-10">{{ myAddress.pais }}</q-item-label>
+            <q-item-label class="q-mt-sm q-ml-lg text-grey-10">{{ myUserData.correo }}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -156,12 +100,6 @@
           <q-skeleton class="q-mb-md" style="height: 30px;"/>
           <q-separator></q-separator>
           <q-skeleton class="q-mb-md" style="height: 90px;"/>
-          <q-separator></q-separator>
-          <q-skeleton class="q-mb-md" style="height: 30px;"/>
-          <q-separator></q-separator>
-          <q-skeleton class="q-mb-md" style="height: 30px;"/>
-          <q-separator></q-separator>
-          <q-skeleton class="q-mb-md" style="height: 30px;"/>
           <q-separator></q-separator>
           <q-skeleton class="q-mb-md" style="height: 30px;"/>
           <q-separator></q-separator>
@@ -194,23 +132,23 @@ const route = useRoute()
 const is_loading = ref(true);
 
 // TODO: Obtener el id_usuario desde el estado de pinia. Se obtendrá desde el sign in (log in).
-const myAddress = ref([]);
+const myUserData = ref([]);
 const id_usuario = ref(1);
 const id = 1;
 
 onBeforeMount(() => {
   setTimeout(() => {
-    api.get(`/Domicilio/ListarDomicilio/${id}/`,
+    api.get(`/Usuario/ListarPerfil/${id}/`,
       {
         headers: {
           'Content-Type': 'application/json',
         }
       }
       ).then(response => {
-        myAddress.value = response.data.value[0];
+        myUserData.value = response.data.value[0];
         console.log('response: ', response)
-        console.log('myAddress: ', myAddress)
-        console.log('myAddress.value: ', myAddress.value)
+        console.log('myUserData: ', myUserData)
+        console.log('myUserData.value: ', myUserData.value)
       }).then(() => {
         is_loading.value = false
       }).catch(() => {
