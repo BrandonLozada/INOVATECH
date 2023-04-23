@@ -6,18 +6,22 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', name: 'Home', component: () => import('pages/IndexPage.vue') },
+      { path: 'my-profile', component: () => import('pages/MyProfile.vue') },
+      { path: 'my-address', component: () => import('pages/MyAddress.vue') },
+      { path: 'my-employee-info', component: () => import('pages/MyEmployeeInfo.vue') },
+      // The next path 'my-profile' will show all the components below (profile, data, addresses, cards, payment methods, etc.)
+      //{ path: 'my-profile', component: () => import('pages/UserProfile.vue') },
+      //{ path: 'my-data', component: () => import('pages/UserData.vue') },
+      //{ path: 'my-address', component: () => import('pages/UserAddress.vue') },
+
       // TODO: La página de la acción de crear cuenta es ejecutada por un administrador y pasaría a ser un formulario, procedimental.
       { path: '/signup', component: () => import('pages/SignUp.vue') },
+
       // TODO: Crear la página (y remplazar el .vue) dónde se visualice el control de asistencia de los usuarios empleados.
       { path: '/assistance-control', component: () => import('pages/FingerprintAttendance.vue') },
 
       // This will be show information about firebase or another thing
       { path: 'my-user/:id', component: () => import('pages/UserInformation.vue') },
-
-      // The next path 'my-profile' will show all the components below (profile, data, addresses, cards, payment methods, etc.)
-      { path: 'my-profile', component: () => import('pages/UserProfile.vue') },
-      { path: 'my-data', component: () => import('pages/UserData.vue') },
-      { path: 'my-addresses', component: () => import('pages/UserAddresses.vue') },
 
       // {
       //   path: '/forms/',

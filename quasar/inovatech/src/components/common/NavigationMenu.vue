@@ -105,19 +105,33 @@ const myProfileNavigationMenu: EssentialLinkProps[] = [
     },
     children: [
       {
-        title: 'Datos de cuenta',
+        title: 'Datos personales',
         icon: 'account_circle',
         meta: {
-          slug: '/my-account-data',
+          slug: '/my-profile',
         }
       },
-      {
-        title: 'Información personal | empleado',
+      // {
+      //   title: 'Datos de cuenta',
+      //   icon: 'account_circle',
+      //   meta: {
+      //     slug: '/my-account-data',
+      //   }
+      // },
+            {
+        title: 'Información laboral',
         icon: 'badge',
         meta: {
-          slug: '/my-personal-information',
+          slug: '/my-employee-info',
         }
       },
+      // {
+      //   title: 'Información personal | empleado',
+      //   icon: 'badge',
+      //   meta: {
+      //     slug: '/my-personal-information',
+      //   }
+      // },
       {
         title: 'Domicilio',
         icon: 'mdi-home-map-marker',
