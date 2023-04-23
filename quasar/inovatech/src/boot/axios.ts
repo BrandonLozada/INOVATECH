@@ -10,10 +10,22 @@ declare module '@vue/runtime-core' {
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
 // If any client changes this (global) instance, it might be a
-// good idea to move this instance creation inside of the
+// good idea to move this instance creation inside the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: 'https://api.example.com' });
+
+let baseURL = ''
+let apiCopomexURL = ''
+let apiCatalogosMtyURL = ''
+
+baseURL = 'https://localhost:44357/api' //baseURL = 'https://127.0.0.1:44357/api'
+apiCopomexURL = 'https://api.copomex.com/query/'
+apiCatalogosMtyURL = 'https://api.monterrey.gob.mx/rest/v1'
+
+const apiController = new AbortController();
+const api = axios.create({baseURL: baseURL});
+const apiCopomex = axios.create({baseURL: apiCopomexURL});
+const apiMty = axios.create({baseURL: apiCatalogosMtyURL});
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
@@ -27,4 +39,4 @@ export default boot(({ app }) => {
   //       so you can easily perform requests against your app's API
 });
 
-export { api };
+export { api, apiCopomex, apiMty, apiController };
