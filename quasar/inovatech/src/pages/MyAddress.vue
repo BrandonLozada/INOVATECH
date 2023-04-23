@@ -200,24 +200,24 @@ const id_usuario = ref(1);
 const id = 1;
 
 onBeforeMount(() => {
-      setTimeout(() => {
-         api.get(`/Domicilio/ListarDomicilio/${id}/`,
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              }
-            }
-          ).then(response => {
-            myAddress.value = response.data.value[0];
-            console.log('response: ', response)
-            console.log('myAddress: ', myAddress)
-            console.log('myAddress.value: ', myAddress.value)
-          }).then(() => {
-            is_loading.value = false
-          }).catch(() => {
-            console.log('Error')
-          })
-      }, 1000)
-    })
+  setTimeout(() => {
+    api.get(`/Domicilio/ListarDomicilio/${id}/`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+      ).then(response => {
+        myAddress.value = response.data.value[0];
+        console.log('response: ', response)
+        console.log('myAddress: ', myAddress)
+        console.log('myAddress.value: ', myAddress.value)
+      }).then(() => {
+        is_loading.value = false
+      }).catch(() => {
+        console.log('Error')
+      })
+  }, 1000)
+})
 </script>
 
