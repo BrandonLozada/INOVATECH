@@ -7,7 +7,7 @@
       </div>
 
       <div class="row justify-end q-my-md">
-        <q-btn color="no-shadow"  class="bg-primary" unelevated no-caps :disable="is_loading" label="Agregar usuario" to="registrar-empresa" />
+        <q-btn color="no-shadow"  class="bg-primary" unelevated no-caps :disable="is_loading" label="Agregar usuario" to="forms/user" />
       </div>
 
       <q-table
@@ -24,8 +24,9 @@
 
         <template v-slot:body-cell-actions="props">
           <q-td :props="props">
-            <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps q-mx-sm" color="primary" icon="edit" size="sm" flat dense/>
-<!--            <q-btn @click="router.push({'path':`/profile/${props.row.id_usuario}`})" class="no-caps q-mx-sm" color="primary" icon="edit" size="sm" flat dense/>-->
+            <!-- TODO: Reemplazar "id_usuario" por "id" para mandarlo como props.-->
+            <q-btn @click="router.push({'path':`/editar-empresa/${props.row.id_usuario}`})" class="no-caps q-mx-sm" color="teal" icon="edit" size="sm" flat dense/>
+<!--            <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps q-mx-sm" color="primary" icon="edit" size="sm" flat dense/>-->
           </q-td>
         </template>
       </q-table>
