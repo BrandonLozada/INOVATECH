@@ -85,7 +85,7 @@
         <div v-show="is_loading" class="q-gutter-md q-px-md q-mt-md">
           <q-skeleton class="q-mb-md" style="height: 30px;"/>
           <q-separator></q-separator>
-          <q-skeleton class="q-mb-md" style="height: 90px;"/>
+          <q-skeleton class="q-mb-md" style="height: 30px;"/>
           <q-separator></q-separator>
           <q-skeleton class="q-mb-md" style="height: 30px;"/>
           <q-separator></q-separator>
