@@ -9,6 +9,8 @@ const routes: RouteRecordRaw[] = [
       { path: 'my-profile', component: () => import('pages/MyProfile.vue') },
       { path: 'my-address', component: () => import('pages/MyAddress.vue') },
       { path: 'my-employee-info', component: () => import('pages/MyEmployeeInfo.vue') },
+      { path: 'user-list', component: () => import('pages/UserList.vue') },
+
       // The next path 'my-profile' will show all the components below (profile, data, addresses, cards, payment methods, etc.)
       //{ path: 'my-profile', component: () => import('pages/UserProfile.vue') },
       //{ path: 'my-data', component: () => import('pages/UserData.vue') },
