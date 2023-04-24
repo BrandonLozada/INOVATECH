@@ -3,7 +3,7 @@
     <div class="col-12" v-bind:class="$q.screen.lt.sm ? 'q-py-md' : 'q-pa-xl'">
 
       <div class="">
-        <p style="font-size: 30px;">Listado de usuarios</p>
+        <p style="font-size: 30px;">Gestión de usuarios</p>
       </div>
 
       <div class="row justify-end q-my-md">
@@ -11,6 +11,7 @@
       </div>
 
       <q-table
+        title="Listado de usuarios"
         class="box-shadow-soft sticky-column-table"
         style="max-width: 100%; min-height: 50%;"
         :rows="rows"
@@ -23,7 +24,8 @@
 
         <template v-slot:body-cell-actions="props">
           <q-td :props="props">
-            <q-btn @click="router.push({'path':`/editar-empresa/${props.row.id}`})" class="no-caps q-mx-sm" color="teal" icon="edit" size="sm" flat dense/>
+            <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps q-mx-sm" color="primary" icon="edit" size="sm" flat dense/>
+<!--            <q-btn @click="router.push({'path':`/profile/${props.row.id_usuario}`})" class="no-caps q-mx-sm" color="primary" icon="edit" size="sm" flat dense/>-->
           </q-td>
         </template>
       </q-table>
@@ -49,11 +51,7 @@ const route = useRoute()
 
 const is_loading = ref(true);
 
-const empresas = ref(null)
-
-const users = ref(null)
 const lstUsers = ref([]);
-
 const rows = ref([])
 const columns = ref()
 
@@ -67,8 +65,6 @@ onMounted(() => {
       }
     ).then(response => {
       lstUsers.value = response.data.value;
-      console.log('response: ', response)
-      console.log('lstUsers: ', lstUsers)
       console.log('lstUsers.value: ', lstUsers.value)
 
       is_loading.value = false
@@ -125,21 +121,21 @@ onMounted(() => {
         },
       ]
 
-      // let fields = columns.value.map((item: { field: never; }) => {
-      //   return item.field
-      // })
+      let fields = columns.value.map((item: { field: never; }) => {
+        return item.field
+      })
 
-      // lstUsers.value.forEach(obj => {
-      //   for (let key in obj) {
-      //     if (!fields.includes(key)) {
-      //       delete obj[key]
-      //     }
-      //     // if (obj[key] === 'null') {
-      //     //   obj[key] = ''
-      //     // }
-      //   }
-      //   rows.value.push(obj)
-      // })
+      lstUsers.value.forEach(obj => {
+        for (let key in obj) {
+          if (!fields.includes(key)) {
+            delete obj[key]
+          }
+          // if (obj[key] === 'null') {
+          //   obj[key] = ''
+          // }
+        }
+        rows.value.push(obj)
+      })
     })
   }, 1000)
 })
@@ -157,7 +153,7 @@ onMounted(() => {
     }
 
      td:last-child {
-       background-color: #cbeee6;
+       background-color: $accent;
        text-align: center !important;
      }
 
