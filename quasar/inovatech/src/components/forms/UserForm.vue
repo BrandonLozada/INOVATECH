@@ -1,13 +1,59 @@
 <template>
   <q-form
     @submit.prevent="submitForm"
-    ref="formularioUsuario"
+    ref="formulario"
     greedy
     class="q-gutter-lg">
 
     <q-card-section class="q-gutter-md">
 
       <q-item-label class="q-py-sm text-h6 text-weight-regular text-grey-9">Datos de cuenta</q-item-label>
+
+      <EntryBlock
+        v-model="formData.nombre"
+        label="Nombre"
+        field_type="text"
+        required
+      />
+
+      <EntryBlock
+        v-model="formData.primer_apellido"
+        label="Primer apellido"
+        field_type="text"
+        required
+      />
+
+      <EntryBlock
+        v-model="formData.segundo_apellido"
+        label="Segundo apellido"
+        field_type="text"
+        required
+      />
+
+      <DateBlock
+        v-model="formData.fecha_nacimiento"
+        label="Fecha de nacimiento"
+        field_type="birthdate"
+        required
+      />
+
+      <q-item-label class="q-pl-xs text-h7 text-weight-regular text-grey-8">
+        Selecciona tu sexo
+      </q-item-label>
+
+      <q-option-group
+        v-model="formData.sexo"
+        :options="genderOptions"
+        color="black"
+        inline
+      />
+
+      <EntryBlock
+        v-model="formData.celular"
+        label="Número de celular"
+        field_type="tel"
+        required
+      />
 
       <EntryBlock
         v-model="formData.correo"
@@ -28,41 +74,47 @@
         @show-password="showPassword = !showPassword"
       />
 
-      <!-- TODO: Este tiene que ser un radio button, por default es 1 = activo, 0 = inactivo.-->
-      <EntryBlock
-        class="q-pt-lg"
+      <q-item-label class="q-pt-lg q-pl-xs text-h7 text-weight-regular text-grey-8">
+        Estado de actividad del usuario
+      </q-item-label>
+
+      <q-option-group
         v-model="formData.es_activo"
-        label="Activo"
-        field_type="text"
-        required
+        :options="activeOptions"
+        color="black"
+        inline
       />
 
-      <!-- TODO: Este tiene que ser un select, consumido de API, para cuestiones de rápido es un estático con opciones.-->
-      <EntryBlock
+      <q-select
         v-model="formData.id_rol"
-        label="Tipo de usuario"
-        field_type="text"
-        required
+        dense
+        outlined
+        label="Rol de usuario"
+        :options="rolesOptions"
+        type="text"
+        emit-value
+        map-options
+        :rules="[ val => val || 'Campo requerido']"
       />
 
       <div class="flex justify-end">
-        <q-btn no-caps type="submit" color="primary" label="Guardar"/>
+        <q-btn no-caps type="submit" color="primary" label="Guardar" :disable="formData.sexo === ''"/>
       </div>
     </q-card-section>
 
       {{ formData }}
 
   </q-form>
-
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
-import {api, axios} from 'boot/axios'
-import {useQuasar, event, date} from 'quasar'
+import {useQuasar, event} from 'quasar'
+import {ref, onBeforeMount} from 'vue';
+import {api} from 'boot/axios'
 import {useRouter, useRoute} from 'vue-router'
 import {useContextStore} from 'stores/SiteContextStore'
 import EntryBlock from 'components/inputs/EntryBlock.vue';
+import DateBlock from 'components/inputs/DateBlock.vue';
 
 const $q = useQuasar()
 
@@ -77,15 +129,44 @@ const responseStatus = ref(false)
 const responseMessage = ref('Error: ')
 
 const showPassword = ref<boolean>(false);
+const rolesOptions = ref([])
+const activeOptions = [
+  {
+    label: 'Activo',
+    value: 1
+  },
+  {
+    label: 'Inactivo',
+    value: 0
+  }
+]
+const genderOptions = [
+  {
+    label: 'M',
+    value: 'M'
+  },
+  {
+    label: 'F',
+    value: 'F'
+  }
+]
 
 const formData = ref({
+  nombre: '',
+  primer_apellido: '',
+  segundo_apellido: '',
+  fecha_nacimiento: '',
+  sexo: '',
+  celular: '',
   correo: '',
   contrasenia: '',
-  // celular: '',
-  es_activo: '',
-  // fecha_registro: '',
-  id_rol: '',
+  es_activo: 1,
+  id_rol: ''
 })
+
+  //q.notify('Message')
+  // or with a config object:
+  // $q.notify({...})
 
 const showNotification = (
   message: string,
@@ -108,17 +189,33 @@ const showLoadingBar = (message: string) => {
   })
 }
 
+onBeforeMount(() => {
+  setTimeout(() => {
+    api.get('/Rol/ListarTodo/').then(response => {
+      console.log('response.data', response.data);
+      response.data.value.forEach(function (obj: { label: any; nombre: any; value: any; id_rol: any; }) {
+        obj.label = obj.nombre
+        delete obj.nombre
+        obj.value = obj.id_rol
+        delete obj.id_rol
+      })
+      rolesOptions.value = response.data.value
+      console.log('rolesOptions', rolesOptions.value)
+    })
+
+  // api.get('/Rol/ListarTodo/').then(response => {
+  //   rolesOptions.value = response.data.value
+  //   console.log('rolesOptions', rolesOptions.value)
+  // }).catch(() => rolesOptions.value = null)
+  }, 1000)
+})
+
 const submitForm = () => {
-  // $q.loading.show({
-  //       message: 'Estamos enviando la información. Espere un momento por favor...'
-  // })
+  showLoadingBar('Estamos enviando la información. Espere un momento por favor...' )
 
-  // showLoadingBar('Estamos enviando la información. Espere un momento por favor...' )
-
-  //put o post, wherever
-  api.post(`/profiles/my/profile/`, formData.value, {
+  api.post('/Usuario/GuardarUsuario/', formData.value, {
     headers: {
-      'Authorization': 'JWT ',
+      // 'Authorization': 'JWT ',
     }
   }).then((response: { status: string | number; }) => {
     if (response.status === 201) {
@@ -127,11 +224,15 @@ const submitForm = () => {
     } else {
       responseMessage.value = responseMessage.value + response.status
     }
-    // $q.loading.hide()
-    showNotification(response.status === 200 ? 'Usuario actualizado exitosamente' : 'Ocurrió un error: ' + response.status, response.status === 200 ? 'green' : 'red', [])
+    $q.loading.hide()
+    showNotification(response.status === 200
+      ? 'Usuario actualizado exitosamente'
+      : 'Ocurrió un error: ' + response.status, response.status === 200
+      ? 'green' : 'red', [])
+
     setTimeout(() => {
       router.push(response.status === 201 || response.status === 200 ? '/inicio' : '/')
-    }, 1000)
+    }, 2000)
   }).catch((error: string) => {
     showNotification('Ocurrió un error' + error, 'red', [
       {
@@ -139,8 +240,7 @@ const submitForm = () => {
         }
       }
     ])
-    // $q.loading.hide()
+    $q.loading.hide()
   })
 }
-
 </script>
