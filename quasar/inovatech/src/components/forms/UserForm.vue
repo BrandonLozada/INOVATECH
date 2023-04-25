@@ -102,8 +102,6 @@
       </div>
     </q-card-section>
 
-      {{ formData }}
-
   </q-form>
 </template>
 
@@ -231,7 +229,7 @@ const submitForm = () => {
       ? 'green' : 'red', [])
 
     setTimeout(() => {
-      router.push(response.status === 201 || response.status === 200 ? '/inicio' : '/')
+      router.push(response.status === 201 || response.status === 200 ? '/user-management' : '/')
     }, 2000)
   }).catch((error: string) => {
     showNotification('Ocurrió un error' + error, 'red', [

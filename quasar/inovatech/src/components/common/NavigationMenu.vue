@@ -111,27 +111,13 @@ const myProfileNavigationMenu: EssentialLinkProps[] = [
           slug: '/my-profile',
         }
       },
-      // {
-      //   title: 'Datos de cuenta',
-      //   icon: 'account_circle',
-      //   meta: {
-      //     slug: '/my-account-data',
-      //   }
-      // },
-            {
+      {
         title: 'Información laboral',
         icon: 'badge',
         meta: {
           slug: '/my-employee-info',
         }
       },
-      // {
-      //   title: 'Información personal | empleado',
-      //   icon: 'badge',
-      //   meta: {
-      //     slug: '/my-personal-information',
-      //   }
-      // },
       {
         title: 'Domicilio',
         icon: 'mdi-home-map-marker',
@@ -158,20 +144,6 @@ const myProfileNavigationMenu: EssentialLinkProps[] = [
 ];
 
 const authNavigationMenu: EssentialLinkProps[] = [
-  {
-    title: 'Asistencia por lector de huella',
-    icon: 'fingerprint',
-    meta: {
-      slug: '/fingerprint-attendance',
-    }
-  },
-  {
-    title: 'Control de asistencia',
-    icon: 'supervisor_account',
-    meta: {
-      slug: '/attendance-control',
-    }
-  },
   {
     title: 'Gestión de usuarios',
     icon: 'manage_accounts',
@@ -200,6 +172,20 @@ const authNavigationMenu: EssentialLinkProps[] = [
       slug: '/department-management',
     }
   },
+  {
+    title: 'Asistencia por lector de huella',
+    icon: 'fingerprint',
+    meta: {
+      slug: '/fingerprint-attendance',
+    }
+  },
+  {
+    title: 'Control de asistencia',
+    icon: 'supervisor_account',
+    meta: {
+      slug: '/attendance-control',
+    }
+  },
 ];
 
 const myNavigationMenu: EssentialLinkProps[] = [
@@ -211,18 +197,10 @@ const myNavigationMenu: EssentialLinkProps[] = [
     }
   },
   {
-    title: 'Solicitud de vacación',
-    icon: 'mdi-calendar-question',
-    meta: {
-      slug: '/forms/vacation_request',
-      // slug: '/vacation_request',
-    }
-  },
-  {
     title: 'Solicitud de permiso',
     icon: 'mdi-comment-question-outline',
     meta: {
-      slug: '/forms/permit_application',
+      slug: '/forms/request-permission',
       // slug: '/permit_application',
     }
   }
@@ -230,7 +208,7 @@ const myNavigationMenu: EssentialLinkProps[] = [
 
 const especialNavigationMenu: EssentialLinkProps[] = [
   {
-    title: 'Atención al cliente',
+    title: 'Atención a sistemas',
     icon: 'contact_support',
     meta: {
       slug: '/contact-support',
