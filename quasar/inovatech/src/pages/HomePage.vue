@@ -50,7 +50,7 @@
                   </div>
                   </q-card-section>
                 </q-card-section>
-                <q-btn no-caps flat align="left" size="17px" class="absolute-bottom text-grey-7 text-weight-light" style="border-top: solid #ddd 1px;" to="request-permission">Solicitar un permiso</q-btn>
+                <q-btn no-caps flat align="left" size="17px" class="absolute-bottom text-grey-7 text-weight-light" style="border-top: solid #ddd 1px;" to="forms/request-permission">Solicitar un permiso</q-btn>
           </q-card>
           </div>
 

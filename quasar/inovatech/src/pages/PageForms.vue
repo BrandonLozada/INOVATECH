@@ -10,9 +10,13 @@
               <div class="q-py-sm">
 
                 <UserForm v-if="this.$route.path === '/forms/user'"/>
+                <RequestPermissionForm v-if="this.$route.path === '/forms/request-permission'"/>
+
+
+
+
                 <ProfileEmployeeForm v-if="this.$route.path === '/forms/profile-employee'"/>
                 <AddressForm v-if="this.$route.path === '/forms/address'"/>
-
                 <PersonalDataForm v-if="this.$route.path === '/forms/data'"/>
 
               </div>
@@ -24,6 +28,11 @@
 
 <script setup lang="ts">
 import UserForm from 'components/forms/UserForm.vue';
+import RequestPermissionForm from 'components/forms/RequestPermissionForm.vue';
+
+
+
+
 import ProfileEmployeeForm from 'components/forms/ProfileEmployeeForm.vue';
 import PersonalDataForm from 'components/forms/PersonalDataForm.vue';
 import AddressForm from 'components/forms/AddressForm.vue';
