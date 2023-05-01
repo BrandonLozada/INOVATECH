@@ -9,6 +9,7 @@
                 <p style="font-weight: 500; margin: 0 ">Bienvenido </p>
                 <!-- TODO: Sacar datos provenientes del estado de Pinia -->
                 <p style="font-weight: 300;">Brandon Lozada Cárdenas</p>
+                <p style="font-weight: 300;">{{ authStore.userData.correo }}</p>
               </div>
             </div>
           </div>
@@ -153,15 +154,15 @@
 </template>
 
 <script setup lang="ts">
-import {ref, onMounted} from 'vue'
 import {useRouter, useRoute} from 'vue-router'
+import {ref, onMounted} from 'vue'
 import {api} from 'boot/axios'
 // import {get_users} from 'boot/utils'
 
-// import {useAuthStore} from 'stores/auth'
+import {useUserStore} from 'stores/user'
 // import {useContextStore} from 'stores/SiteContextStore'
 
-// const authStore = useAuthStore()
+const authStore = useUserStore()
 // const siteContext = useContextStore()
 const router = useRouter()
 const route = useRoute()
