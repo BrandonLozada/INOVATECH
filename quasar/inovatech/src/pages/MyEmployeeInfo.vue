@@ -102,29 +102,24 @@ import {ref, onBeforeMount} from 'vue'
 import {useRouter, useRoute} from 'vue-router'
 import {useQuasar} from 'quasar'
 import {api} from 'boot/axios'
-
-// import {useAuthStore} from 'stores/auth'
-// import {useContextStore} from 'stores/SiteContextStore'
+import {useAuthStore} from 'stores/auth';
 
 const $q = useQuasar()
-// const siteContext = useContextStore()
 const router = useRouter()
 const route = useRoute()
-// siteContext.current_page = route.path
-// const authStore = useAuthStore()
+const authStore = useAuthStore()
 
 const is_loading = ref(true);
 
 const myEmployeeProfileData = ref([]);
-const id_usuario = ref(1);
-const id = 1;
 
 onBeforeMount(() => {
   setTimeout(() => {
-    api.get(`/PerfilEmpleado/ListarPerfilEmpleado/${id}/`,
+    api.get(`/PerfilEmpleado/ListarPerfilEmpleado/${authStore.userData.id_usuario}/`,
       {
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + authStore.inovatechUserData.accessToken,
         }
       }
       ).then(response => {

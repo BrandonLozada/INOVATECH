@@ -120,12 +120,6 @@ const company: EssentialLinkProps[] = [
     meta: {
       slug: '/contact',
     }
-  },
-  {
-    title: 'Emprendedurismo',
-    meta: {
-      slug: '/entrepreneurship',
-    }
   }
 ];
 

@@ -8,10 +8,7 @@ const router = useRouter()
 const route = useRoute()
 const $q = useQuasar()
 
-const useAuthStore = () => {
-
-  return defineStore('auth', {
-
+export const useAuthStore = defineStore('auth', {
     state: () => ({
       continueToURL: '/',
       userData: {id_usuario: '', nombre: '', primer_apellido: '', segundo_apellido: '', fecha_nacimiento: '', sexo: '', correo: '', celular: '',	es_activo: false,	id_rol: ''},
@@ -52,12 +49,6 @@ const useAuthStore = () => {
             const title = '¡Bienvenido, ' + this.userData.nombre + ' ' + this.userData.primer_apellido + '!'
             const message = 'Tu sesión está activa ahora.<br>'
 
-            // if (this.continueToURL === '/') {
-            //   router.push(this.continueToURL)
-            // } else {
-            //   window.location.href = this.continueToURL;
-            // }
-
             $q.dialog({
             title: title,
             message: message,
@@ -67,7 +58,6 @@ const useAuthStore = () => {
             }).onOk(() => {
               if (this.continueToURL === '/') {
                 router.push(this.continueToURL)
-                console.log('Redirigiendo a ...')
               } else {
                 window.location.href = this.continueToURL;
               }
@@ -118,7 +108,6 @@ const useAuthStore = () => {
 
     },
 
-})()
-}
+})
 
-export {useAuthStore};
+// export {useAuthStore};
