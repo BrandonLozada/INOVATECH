@@ -8,7 +8,7 @@
               <div class="text-subtitle1 q-mt-md text-center">
                 <p style="font-weight: 500; margin: 0 ">Bienvenido </p>
                 <!-- TODO: Sacar datos provenientes del estado de Pinia -->
-                <p style="font-weight: 300;">Brandon Lozada Cárdenas</p>
+                <p style="font-weight: 300;">{{ nombre_completo }}</p>
                 <p style="font-weight: 300;">{{ authStore.userData.correo }}</p>
               </div>
             </div>
@@ -154,19 +154,13 @@
 </template>
 
 <script setup lang="ts">
-import {useRouter, useRoute} from 'vue-router'
-import {ref, onMounted} from 'vue'
-import {api} from 'boot/axios'
-// import {get_users} from 'boot/utils'
+import {ref} from 'vue';
+import {useRouter} from 'vue-router'
+import {useAuthStore} from 'stores/auth';
 
-import {useUserStore} from 'stores/user'
-// import {useContextStore} from 'stores/SiteContextStore'
-
-const authStore = useUserStore()
-// const siteContext = useContextStore()
 const router = useRouter()
-const route = useRoute()
-// siteContext.current_page = route.path
+const authStore = useAuthStore()
+const nombre_completo =ref<string>(authStore.userData.nombre + '' + authStore.userData.primer_apellido + '' + authStore.userData.segundo_apellido);
 </script>
 
 <style scoped lang="scss">

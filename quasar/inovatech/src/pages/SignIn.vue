@@ -83,17 +83,17 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from 'vue'
+import {ref} from 'vue'
 import {useQuasar} from 'quasar'
 import {useRouter, useRoute} from 'vue-router'
+import {useAuthStore} from 'stores/auth';
 import EntryBlock from 'components/inputs/EntryBlock.vue';
-import {useUserStore} from 'stores/user';
 
 const $q = useQuasar()
 const router = useRouter()
 const route = useRoute()
 
-const authStore = useUserStore()
+const authStore = useAuthStore()
 const emailPattern = /^(?=[a-zA-Z0-9@.%+-]{6,254}$)[a-zA-Z0-9.%+-]{1,64}@(?:[a-zA-Z0-9-]{1,63}\.){1,8}[a-zA-Z]{2,63}$/
 const passwordPattern = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{10,})/;
 const showResetPasswordBtn = ref<boolean>(false)
@@ -115,24 +115,24 @@ const resetPassword = (val: string) => {
   }
 }
 
-const signIn = async () => {
-  $q.loading.show({
-    message: 'Estamos generando tu cuenta, por favor espera...'
-  })
-  try {
-    //await signInWithEmailAndPassword(firebaseAuth, email.value, password.value)
-    await router.push('/')
-  } catch (error) {
-    console.log(error.message)
-    $q.dialog({
-      title: 'Error',
-      message: 'Error en la autenticación, verifica que tu email y contraseña sean correctos',
-      ok: 'Entendido'
-    }).onOk(() => {
-      showResetPasswordBtn.value = true
-    })
-  } finally {
-    $q.loading.hide()
-  }
-}
+// const signIn = async () => {
+//   $q.loading.show({
+//     message: 'Estamos generando tu cuenta, por favor espera...'
+//   })
+//   try {
+//     //await signInWithEmailAndPassword(firebaseAuth, email.value, password.value)
+//     await router.push('/')
+//   } catch (error:any) {
+//     console.log(error.message)
+//     $q.dialog({
+//       title: 'Error',
+//       message: 'Error en la autenticación, verifica que tu email y contraseña sean correctos',
+//       ok: 'Entendido'
+//     }).onOk(() => {
+//       showResetPasswordBtn.value = true
+//     })
+//   } finally {
+//     $q.loading.hide()
+//   }
+// }
 </script>
