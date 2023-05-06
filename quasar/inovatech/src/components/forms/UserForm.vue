@@ -106,19 +106,22 @@
 </template>
 
 <script setup lang="ts">
-import {useQuasar, event} from 'quasar'
 import {ref, onBeforeMount} from 'vue';
-import {api} from 'boot/axios'
 import {useRouter, useRoute} from 'vue-router'
+import {useQuasar, event} from 'quasar'
+import {api} from 'boot/axios'
+import {useAuthStore} from 'stores/auth';
 import {useContextStore} from 'stores/SiteContextStore'
+
 import EntryBlock from 'components/inputs/EntryBlock.vue';
 import DateBlock from 'components/inputs/DateBlock.vue';
 
 const $q = useQuasar()
-
-const siteContext = useContextStore()
 const router = useRouter()
 const route = useRoute()
+const authStore = useAuthStore()
+
+const siteContext = useContextStore()
 siteContext.currentPage = route.path
 
 const {stopAndPrevent} = event
@@ -161,10 +164,6 @@ const formData = ref({
   es_activo: 1,
   id_rol: ''
 })
-
-  //q.notify('Message')
-  // or with a config object:
-  // $q.notify({...})
 
 const showNotification = (
   message: string,
@@ -213,7 +212,8 @@ const submitForm = () => {
 
   api.post('/Usuario/GuardarUsuario/', formData.value, {
     headers: {
-      // 'Authorization': 'JWT ',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + authStore.inovatechUserData.accessToken,
     }
   }).then((response: { status: string | number; }) => {
     if (response.status === 201) {

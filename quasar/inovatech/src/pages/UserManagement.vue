@@ -38,17 +38,14 @@
 <script setup lang="ts">
 import {ref, onMounted} from 'vue'
 import {useRouter, useRoute} from 'vue-router'
+import {useQuasar} from 'quasar'
 import {api} from 'boot/axios'
-// import {get_users} from 'boot/utils'
+import {useAuthStore} from 'stores/auth';
 
-// import {useAuthStore} from 'stores/auth'
-// import {useContextStore} from 'stores/SiteContextStore'
-
-// const authStore = useAuthStore()
-// const siteContext = useContextStore()
+const $q = useQuasar()
 const router = useRouter()
 const route = useRoute()
-// siteContext.current_page = route.path
+const authStore = useAuthStore()
 
 const is_loading = ref(true);
 
@@ -62,6 +59,7 @@ onMounted(() => {
       {
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + authStore.inovatechUserData.accessToken,
         }
       }
     ).then(response => {
