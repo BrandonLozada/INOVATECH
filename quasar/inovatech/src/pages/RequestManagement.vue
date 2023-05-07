@@ -56,7 +56,7 @@
             </q-td>
 
            <q-td auto-width>
-              <q-btn @click="router.push({'path':`/editar-empresa/${props.row.id_solicitud_permiso}`})" class="no-caps" color="secondary" icon="rate_review" size="md" flat dense/>
+              <q-btn @click="router.push({'path':`/permission-response/${props.row.id_solicitud_permiso}`})" class="no-caps" color="secondary" icon="rate_review" size="md" flat dense/>
            </q-td>
 
           </q-tr>

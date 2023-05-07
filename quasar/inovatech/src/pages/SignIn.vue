@@ -1,8 +1,6 @@
 <template>
-  <!-- TODO: Buscar por qué es necesario poner la altura mínima de 860px para que se centre
-           tal vez necesito importar los demás css. -->
   <q-page class="row items-center justify-evenly" style="min-height: 860px;">
-    <div class="col-12 col-md-5 col-lg-4 col-xl-4" v-bind:class="$q.screen.lt.sm ? 'q-pa-sm' : 'q-pa-xl'">
+    <div class="col-12 col-md-6 col-lg-5 col-xl-4" v-bind:class="$q.screen.lt.sm ? 'q-pa-sm' : 'q-pa-xl'">
       <q-card class="my-card q-pa-lg" v-bind:style="$q.screen.lt.sm ? 'border: none;' : 'border: solid #ddd 1px;'">
         <q-card-section>
           <div class="row justify-center align-center">
@@ -35,6 +33,7 @@
                   />
 
                   <EntryBlock
+                    class="q-pt-md"
                     v-model="contrasenia"
                     label="Contraseña"
                     :type="showPassword ? 'text' : 'password'"

@@ -28,8 +28,12 @@ const routes: RouteRecordRaw[] = [
       { path: 'requests', component: () => import('pages/RequestManagement.vue') },
 
 
+
       // Visualización de un usuario
       { path: 'user-profile/:id', component: () => import('pages/UserProfile.vue'), props: true },
+
+      // Respuesta del permiso
+      { path: 'permission-response/:id', component: () => import('pages/PermissionResponse.vue'), props: true },
 
       // TODO: Crear la página (y remplazar el .vue) dónde se visualice el control de asistencia de los usuarios empleados.
       { path: '/assistance-control', component: () => import('pages/FingerprintAttendance.vue') },
