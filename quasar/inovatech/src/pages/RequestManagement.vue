@@ -21,49 +21,61 @@
         no-data-label="Aún no se encuentra nada aquí"
         no-results-label="La búsqueda no arrojó ningún resultado"
       >
+<!--        <template v-slot:body-cell-actions="props">-->
+<!--          <q-tr :props="props">-->
+<!--            <q-btn @click="router.push({'path':`/editar-empresa/${props.row.id_solicitud_permiso}`})" class="no-caps q-mx-sm" color="teal" icon="edit" size="sm" flat dense/>-->
+<!--          </q-tr>-->
+<!--        </template>-->
 
         <template v-slot:header="props">
-        <q-tr :props="props">
-          <q-th auto-width></q-th>
+          <q-tr :props="props">
+            <q-th auto-width></q-th>
 
-          <q-th
-            v-for="col in props.cols"
-            :key="col.name"
-            :props="props"
-          >
-            {{ col.label }}
-          </q-th>
-        </q-tr>
-      </template>
+            <q-th
+              v-for="col in props.cols"
+              :key="col.name"
+              :props="props"
+            >
+              {{ col.label }}
+            </q-th>
+          </q-tr>
+        </template>
 
-      <template v-slot:body="props">
-        <q-tr :props="props">
-          <q-td auto-width>
-            <q-toggle v-model="props.expand" checked-icon="add" unchecked-icon="remove"></q-toggle>
-          </q-td>
+        <template v-slot:body="props"> <!--@click="onRowClick(props.row)"-->
+          <q-tr :props="props" >
+            <q-td auto-width>
+              <q-toggle v-model="props.expand" checked-icon="add" unchecked-icon="remove"></q-toggle>
+            </q-td>
 
-          <q-td
-            v-for="col in props.cols"
-            :key="col.name"
-            :props="props"
-          >
-            {{ col.value }}
-          </q-td>
+            <q-td
+              v-for="col in props.cols"
+              :key="col.name"
+              :props="props"
+            >
+              {{ col.value }}
+            </q-td>
 
-        </q-tr>
-        <q-tr v-show="props.expand" :props="props">
-          <q-td colspan="100%">
+           <q-td auto-width>
+              <q-btn @click="router.push({'path':`/editar-empresa/${props.row.id_solicitud_permiso}`})" class="no-caps" color="secondary" icon="rate_review" size="md" flat dense/>
+           </q-td>
 
-            <div class="q-pl-lg">
-              <div class="text-left">Motivo: {{ props.row.motivo }}.</div>
-              <div v-if="props.row.observaciones != null" class="text-left">Observaciones: {{ props.row.observaciones }}.</div>
-              <div class="text-left">Jefe autorizador: {{ props.row.nombre_usuario_autorizador }}.</div>
-              <div class="text-left">Fecha de solicitud: {{ props.row.fecha_solicitud }}</div>
-            </div>
+          </q-tr>
 
-          </q-td>
-        </q-tr>
-      </template>
+          <q-tr v-show="props.expand" :props="props">
+            <q-td colspan="100%">
+
+              <div class="q-pl-lg">
+                <div class="text-left">Motivo: {{ props.row.motivo }}.</div>
+                <div v-if="props.row.observaciones != null" class="text-left">Observaciones: {{ props.row.observaciones }}.</div>
+                <div class="text-left">Jefe autorizador: {{ props.row.nombre_usuario_autorizador }}.</div>
+                <div class="text-left">Fecha de solicitud: {{ props.row.fecha_solicitud }}</div>
+<!--                <q-btn @click="router.push({'path':`/editar-empresa/${props.row.id_solicitud_permiso}`})" class="no-caps q-mx-sm" color="teal" icon="edit" size="sm" flat dense/>-->
+              </div>
+
+            </q-td>
+          </q-tr>
+
+        </template>
       </q-table>
 
     </div>
@@ -87,6 +99,8 @@ const is_loading = ref(true);
 const lstRequets = ref([]);
 const rows = ref([])
 const columns = ref()
+
+// const onRowClick = (row: { id_solicitud_permiso: never; }) => alert(`${row.id_solicitud_permiso} clicked`)
 
 onMounted(() => {
   setTimeout(() => {
@@ -120,7 +134,7 @@ onMounted(() => {
         { name: 'dias', align: 'left', label: 'Días', field: 'dias' },
         { name: 'fecha_inicio', align: 'left', label: 'Fecha inicio ', field: 'fecha_inicio', sortable: true },
         { name: 'fecha_fin', align: 'left', label: 'Fecha fin', field: 'fecha_fin' },
-        { name: 'actions', align: 'center', label: 'Acciones', field: 'acciones' }
+        // { name: 'actions', align: 'center', label: 'actions', field: 'actions' }
       ]
 
       rows.value = lstRequets.value
@@ -131,28 +145,28 @@ onMounted(() => {
 })
 </script>
 
-<!--<style scoped lang="scss">-->
-<!-- .sticky-column-table {-->
-<!--   /* specifying max-width so the example can-->
-<!--    highlight the sticky column on any browser window */-->
-<!--    max-width: 600px;-->
+<style scoped lang="scss">
+ .sticky-column-table {
+   /* specifying max-width so the example can
+    highlight the sticky column on any browser window */
+    max-width: 600px;
 
-<!--    thead tr:last-child th:last-child {-->
-<!--      /* bg color is important for th; just specify one */-->
-<!--      background-color: #fff;-->
-<!--    }-->
+    thead tr:last-child th:last-child {
+      /* bg color is important for th; just specify one */
+      background-color: #fff;
+    }
 
-<!--     td:last-child {-->
-<!--       background-color: $accent;-->
-<!--       text-align: center !important;-->
-<!--     }-->
+     td:last-child {
+       background-color: #eef2f7;
+       text-align: center !important;
+     }
 
-<!--     th:last-child,-->
-<!--     td:last-child {-->
-<!--       position: sticky;-->
-<!--       right: 0;-->
-<!--       z-index: 1;-->
-<!--       text-align: center !important;-->
-<!--     }-->
-<!-- }-->
-<!--</style>-->
+     th:last-child,
+     td:last-child {
+       position: sticky;
+       right: 0;
+       z-index: 1;
+       text-align: center !important;
+     }
+ }
+</style>
