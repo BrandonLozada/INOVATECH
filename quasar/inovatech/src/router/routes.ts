@@ -25,6 +25,8 @@ const routes: RouteRecordRaw[] = [
       // Gestión
       { path: 'user-management', component: () => import('pages/UserManagement.vue') },
       { path: 'employee-list', component: () => import('pages/EmployeeList.vue') },
+      { path: 'requests', component: () => import('pages/RequestManagement.vue') },
+
 
       // Visualización de un usuario
       { path: 'user-profile/:id', component: () => import('pages/UserProfile.vue'), props: true },

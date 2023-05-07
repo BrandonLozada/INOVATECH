@@ -12,11 +12,11 @@
                 <UserForm v-if="this.$route.path === '/forms/user'"/>
                 <RequestPermissionForm v-if="this.$route.path === '/forms/request-permission'"/>
 
-
-
-
+                <!-- TODO: Pendientes -->
                 <ProfileEmployeeForm v-if="this.$route.path === '/forms/profile-employee'"/>
                 <AddressForm v-if="this.$route.path === '/forms/address'"/>
+
+                <!-- TODO: Por ver -->
                 <PersonalDataForm v-if="this.$route.path === '/forms/data'"/>
 
               </div>
