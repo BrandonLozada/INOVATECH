@@ -27,22 +27,20 @@ const routes: RouteRecordRaw[] = [
 
       //                            GESTIÓN
       { path: 'user-management', component: () => import('pages/UserManagement.vue') },
-      { path: 'employee-list', component: () => import('pages/EmployeeList.vue') },
+      // { path: 'employee-list', component: () => import('pages/EmployeeList.vue') },
       { path: 'requests', component: () => import('pages/RequestManagement.vue') },
 
       // Formulario ProfileEmployeeForm -> Creación de perfil de empleado externo
       { path: 'forms/profile-employee/:id', component: () => import('components/forms/ProfileEmployeeForm.vue'), props: true },
 
-
-
       // Visualización de un usuario
-      { path: 'user-profile/:id', component: () => import('pages/UserProfile.vue'), props: true },
+      { path: 'user-profile/:id', component: () => import('pages/ViewUserProfile.vue'), props: true },
 
       // Respuesta del permiso
       { path: 'permission-response/:id', component: () => import('pages/PermissionResponse.vue'), props: true },
 
       // TODO: Crear la página (y remplazar el .vue) dónde se visualice el control de asistencia de los usuarios empleados.
-      { path: '/assistance-control', component: () => import('pages/FingerprintAttendance.vue') },
+      { path: 'assistance-control', component: () => import('pages/FingerprintAttendance.vue') },
     ],
   },
 

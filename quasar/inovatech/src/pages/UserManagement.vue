@@ -16,18 +16,60 @@
         style="max-width: 100%; min-height: 50%;"
         :rows="rows"
         :columns="columns"
-        row-key="name"
+        row-key="id_usuario"
         :loading="is_loading"
         no-data-label="Aún no se encuentra nada aquí"
         no-results-label="La búsqueda no arrojó ningún resultado"
       >
 
-        <template v-slot:body-cell-actions="props">
-          <q-td :props="props">
-            <!-- TODO: Reemplazar "id_usuario" por "id" para mandarlo como props.-->
-            <q-btn @click="router.push({'path':`/editar-empresa/${props.row.id_usuario}`})" class="no-caps q-mx-sm" color="teal" icon="edit" size="sm" flat dense/>
-<!--            <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps q-mx-sm" color="primary" icon="edit" size="sm" flat dense/>-->
-          </q-td>
+        <template v-slot:header="props">
+          <q-tr :props="props">
+            <q-th auto-width></q-th>
+
+            <q-th
+              v-for="col in props.cols"
+              :key="col.name"
+              :props="props"
+            >
+              {{ col.label }}
+            </q-th>
+          </q-tr>
+        </template>
+
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td auto-width>
+              <q-toggle v-model="props.expand" checked-icon="add" unchecked-icon="remove"></q-toggle>
+            </q-td>
+
+            <q-td
+              v-for="col in props.cols"
+              :key="col.name"
+              :props="props"
+            >
+              {{ col.value }}
+            </q-td>
+
+            <q-td auto-width>
+              <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps" color="secondary" icon="rate_review" size="md" flat dense/>
+           </q-td>
+
+          </q-tr>
+
+          <q-tr v-show="props.expand" :props="props">
+            <q-td colspan="100%">
+
+              <div class="q-pl-lg">
+<!--                <div class="text-left">Motivo: {{ props.row.motivo }}.</div>-->
+<!--                <div v-if="props.row.observaciones != null" class="text-left">Observaciones: {{ props.row.observaciones }}.</div>-->
+<!--                <div class="text-left">Jefe autorizador: {{ props.row.nombre_usuario_autorizador }}.</div>-->
+<!--                <div class="text-left">Fecha de solicitud: {{ props.row.fecha_solicitud }}</div>-->
+              </div>
+
+            </q-td>
+          </q-tr>
+
+
         </template>
       </q-table>
 
@@ -65,76 +107,30 @@ onMounted(() => {
     ).then(response => {
       lstUsers.value = response.data.value;
       console.log('lstUsers.value: ', lstUsers.value)
+      console.log('rows', rows.value)
 
       is_loading.value = false
 
       columns.value = [
         {
-          name: 'id_usuario',
+          name: 'name',
+          required: true,
           label: 'ID',
-          field: 'id_usuario',
           align: 'left',
-          sortable: true,
+          field: (row: { id_usuario: never; }) => row.id_usuario,
+          format: (val: never) => `${val}`,
+          sortable: true
         },
-        {
-          name: 'nombre_completo',
-          label: 'Nombre completo',
-          field: 'nombre_completo',
-          align: 'left',
-          sortable: true,
-        },
-        {
-          name: 'correo',
-          label: 'Correo',
-          field: 'correo',
-          align: 'left',
-          sortable: true,
-        },
-        {
-          name: 'rol',
-          label: 'Rol',
-          field: 'rol',
-          align: 'left',
-          sortable: true,
-        },
-        {
-          name: 'activo',
-          label: 'Activo',
-          field: 'activo',
-          align: 'left',
-          sortable: true,
-        },
-        {
-          name: 'fecha_registro',
-          label: 'Fecha de registro',
-          field: 'fecha_registro',
-          align: 'left',
-          sortable: true,
-        },
-        {
-          name: 'actions',
-          label: 'Acciones',
-          field: 'acciones',
-          align: 'left',
-          sortable: true,
-        },
+        { name: 'nombre_completo', align: 'left', label: 'Nombre completo', field: 'nombre_completo', sortable: true },
+        { name: 'correo', align: 'left', label: 'Correo', field: 'correo', sortable: true },
+        { name: 'rol', align: 'left', label: 'Rol', field: 'rol', sortable: true },
+        { name: 'activo', align: 'left', label: 'Activo', field: 'activo' },
+        { name: 'fecha_registro', align: 'left', label: 'Fecha registro ', field: 'fecha_registro', sortable: true },
       ]
 
-      let fields = columns.value.map((item: { field: never; }) => {
-        return item.field
-      })
+      rows.value = lstUsers.value
+      console.log('rows transformado', rows.value)
 
-      lstUsers.value.forEach(obj => {
-        for (let key in obj) {
-          if (!fields.includes(key)) {
-            delete obj[key]
-          }
-          // if (obj[key] === 'null') {
-          //   obj[key] = ''
-          // }
-        }
-        rows.value.push(obj)
-      })
     })
   }, 1000)
 })
@@ -152,7 +148,7 @@ onMounted(() => {
     }
 
      td:last-child {
-       background-color: $accent;
+       background-color: #eef2f7;
        text-align: center !important;
      }
 
