@@ -299,7 +299,7 @@ const submitForm = () => {
 
   formData.value.id_usuario_autorizador = authStore.userData.id_usuario
 
-  api.post(`/Permiso/ActualizarPermiso/${route.params.id}/`, formData.value, {
+  api.patch(`/Permiso/ActualizarPermiso/${route.params.id}/`, formData.value, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + authStore.inovatechUserData.accessToken,
@@ -322,7 +322,7 @@ const submitForm = () => {
       ? 'green' : 'red', [])
 
     setTimeout(() => {
-      router.push(response.status === 201 || response.status === 200 ? '/' : '/')
+      router.push(response.status === 201 || response.status === 200 ? '/requests' : '/requests')
     }, 2000)
   }).catch((error: string) => { // Para ambos y si hubo otro tipo de error.
     showNotification('Ocurrió un error:  ' + error, 'red', [

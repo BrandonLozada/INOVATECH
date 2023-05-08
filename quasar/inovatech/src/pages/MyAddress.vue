@@ -15,14 +15,14 @@
                       style="font-weight: 500; font-size: 1rem; margin: 2px;">Domicilio
         </q-item-label>
 
-        <q-btn
-          to="crear-perfil"
-          label="Editar"
-          flat
-          color="grey-7"
-          class="absolute-top-right bg-grey-2"
-          style="top: 0; right: 15px; transform: translateY(15px);"
-        ></q-btn>
+<!--        <q-btn-->
+<!--          to=""-->
+<!--          label="Editar"-->
+<!--          flat-->
+<!--          color="grey-7"-->
+<!--          class="absolute-top-right bg-grey-2"-->
+<!--          style="top: 0; right: 15px; transform: translateY(15px);"-->
+<!--        ></q-btn>-->
 
         <q-item v-if="myAddress.calle != null">
           <q-item-section class="col-3">
