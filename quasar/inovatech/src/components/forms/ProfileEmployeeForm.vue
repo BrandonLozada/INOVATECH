@@ -170,7 +170,7 @@ const departmentsOptions = ref([])
 const positionsOptions = ref([])
 
 const formData = ref({
-  id_usuario: 0,
+  id_usuario: '',
   CURP: '',
   RFC: '',
   NSS: '',
@@ -254,9 +254,16 @@ onBeforeMount(() => {
 const submitForm = () => {
   showLoadingBar('Estamos enviando la información. Espere un momento por favor...' )
 
-  //formData.value.id_usuario = authStore.userData.id_usuario
+  // TODO: Hacerlo con if ternario, formData.value.id_usuario  ? : .
   let params_id = route.params.id.toString();
-  formData.value.id_usuario = parseInt(params_id)
+
+  if (authStore.userData.id_usuario === params_id){
+      formData.value.id_usuario = authStore.userData.id_usuario
+  } else {
+    formData.value.id_usuario = route.params.id.toString()
+  }
+
+  console.log('formData.value', formData.value);
 
   api.post('/PerfilEmpleado/CrearPerfilEmpleado/', formData.value, {
     headers: {

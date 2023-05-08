@@ -124,12 +124,12 @@
 <!--          ></q-btn>-->
 
           <q-btn v-if="myEmployeeProfileData != null"
-            to="forms/profile-employee"
-            label="Editar"
-            flat
-            color="grey-7"
-            class="absolute-top-right bg-grey-2"
-            style="top: 0; right: 15px; transform: translateY(15px);"
+                 @click="router.push({'path':`/forms/profile-employee/${route.params.id}`})"
+                 label="Editar"
+                 flat
+                 color="grey-7"
+                 class="absolute-top-right bg-grey-2"
+                 style="top: 0; right: 15px; transform: translateY(15px);"
           ></q-btn>
 
           <div v-show="is_loading" class="q-gutter-md q-px-md q-mt-md">
@@ -292,7 +292,7 @@
           </div>
           <template v-slot:action>
             <q-btn flat outline color="primary"
-                   to="/"
+                   @click="router.push({'path':`/forms/profile-employee/${route.params.id}`})"
                    label="Agregar" />
           </template>
         </q-banner>
