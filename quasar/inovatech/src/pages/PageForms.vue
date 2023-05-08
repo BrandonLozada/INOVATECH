@@ -14,7 +14,7 @@
 
 
                 <!-- TODO: Pendientes -->
-                <ProfileEmployeeForm v-if="this.$route.path === '/forms/profile-employee'"/>
+<!--                <ProfileEmployeeForm v-if="this.$route.path === '/forms/profile-employee/:id'"/>-->
                 <AddressForm v-if="this.$route.path === '/forms/address'"/>
 
                 <!-- TODO: Por ver -->
@@ -31,10 +31,7 @@
 import UserForm from 'components/forms/UserForm.vue';
 import RequestPermissionForm from 'components/forms/RequestPermissionForm.vue';
 
-
-
-
-import ProfileEmployeeForm from 'components/forms/ProfileEmployeeForm.vue';
+// import ProfileEmployeeForm from 'components/forms/ProfileEmployeeForm.vue';
 import PersonalDataForm from 'components/forms/PersonalDataForm.vue';
 import AddressForm from 'components/forms/AddressForm.vue';
 </script>

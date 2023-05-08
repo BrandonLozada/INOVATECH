@@ -16,16 +16,22 @@ const routes: RouteRecordRaw[] = [
       // Home
       { path: '', component: () => import('pages/HomePage.vue')},
 
-      // Mis datos
-      { path: 'my-user/:id', component: () => import('pages/UserInformation.vue') },
+      //                           GESTIÓN - MIS DATOS
+      // { path: 'my-user/:id', component: () => import('pages/UserInformation.vue') },
       { path: 'my-profile', component: () => import('pages/MyProfile.vue') },
       { path: 'my-address', component: () => import('pages/MyAddress.vue') },
       { path: 'my-employee-info', component: () => import('pages/MyEmployeeInfo.vue') },
 
-      // Gestión
+      // Formulario ProfileEmployeeForm -> Creación de perfil de empleado externo
+      { path: 'forms/profile-employee', component: () => import('components/forms/ProfileEmployeeForm.vue') },
+
+      //                            GESTIÓN
       { path: 'user-management', component: () => import('pages/UserManagement.vue') },
       { path: 'employee-list', component: () => import('pages/EmployeeList.vue') },
       { path: 'requests', component: () => import('pages/RequestManagement.vue') },
+
+      // Formulario ProfileEmployeeForm -> Creación de perfil de empleado externo
+      { path: 'forms/profile-employee/:id', component: () => import('components/forms/ProfileEmployeeForm.vue'), props: true },
 
 
 

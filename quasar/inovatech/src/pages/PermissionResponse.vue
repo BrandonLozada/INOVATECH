@@ -153,7 +153,48 @@
                  P_Estado = P_estado,
                  P_Observaciones = P_observaciones,
                  P_idUsuario_autorizador = P_id_usuario_autorizador -->
-      <RequestPermissionForm props="formData.value"/>
+
+      <div class="row justify-center align-center">
+            <div class="col-xs-12">
+              <div class="q-py-xl">
+
+      <q-form
+        @submit.prevent="submitForm"
+        ref="formulario"
+        greedy
+        class="q-gutter-lg">
+
+        <q-card-section class="my-card q-gutter-md">
+
+          <q-item-label class="q-py-sm text-h6 text-weight-regular text-grey-9">Respuesta a solicitud</q-item-label>
+
+          <q-select
+            v-model="formData.estado"
+            dense
+            outlined
+            label="Estado de la solicitud"
+            :options="StatesOptions"
+            emit-value
+            map-options
+            :rules="[val => (val !== null && val !== '') || 'Estado de la solicitud es requerido']"
+          />
+
+          <TextareaBlock
+            v-model="formData.observaciones"
+            label="Observaciones"
+            field_type="textarea"
+            required
+          />
+
+          <div class="flex justify-end">
+            <q-btn no-caps type="submit" color="primary" label="Responder" :disable="formData.observaciones === '' || formData.estado === ''"/>
+          </div>
+        </q-card-section>
+      </q-form>
+
+              </div>
+            </div>
+          </div>
 
     </div>
 
@@ -163,11 +204,11 @@
 <script setup lang="ts">
 import {ref, onBeforeMount} from 'vue'
 import {useRouter, useRoute} from 'vue-router'
-import {useQuasar} from 'quasar'
+import {event, useQuasar} from 'quasar'
 import {api} from 'boot/axios'
 import {useAuthStore} from 'stores/auth';
 import {useContextStore} from 'stores/SiteContextStore'
-import RequestPermissionForm from 'components/forms/RequestPermissionForm.vue';
+import TextareaBlock from "components/inputs/TextareaBlock.vue";
 
 const $q = useQuasar()
 const router = useRouter()
@@ -176,18 +217,60 @@ const authStore = useAuthStore()
 const siteContext = useContextStore()
 siteContext.currentPage = route.path
 
+const {stopAndPrevent} = event
+const submitResult = ref([])
+const responseStatus = ref(false)
+const responseMessage = ref('Error: ')
+
 const is_loading = ref(true);
 
 const permissionRequest = ref([]);
 
+const StatesOptions = [
+  {
+    label: 'Pendiente',
+    value: '0',
+  },
+  {
+    label: 'Revisión',
+    value: '1',
+  },
+  {
+    label: 'Aprobado',
+    value: '2',
+  },
+  {
+    label: 'Rechazado',
+    value: '3',
+  },
+]
+
 const formData = ref({
-  id_usuario_solicitante: 2,
-  id_permiso: 3,
-  motivo: 'HOLA',
-  fecha_inicio: '2023/05/07',
-  fecha_fin: '2023/05/12',
-  id_usuario_autorizador: 2
+  estado: '',
+  observaciones: '',
+  id_usuario_autorizador: ''
 })
+
+const showNotification = (
+  message: string,
+  color: string,
+  actions: {
+    label: string;
+    color: string;
+    handler: () => void
+  }[] | undefined) => {
+  $q.notify({
+    message: message,
+    color: color,
+    actions: actions
+  })
+}
+
+const showLoadingBar = (message: string) => {
+  $q.loading.show({
+    message: message
+  })
+}
 
 onBeforeMount(() => {
   setTimeout(() => {
@@ -210,5 +293,46 @@ onBeforeMount(() => {
       })
   }, 1000)
 })
+
+const submitForm = () => {
+  showLoadingBar('Estamos enviando la información. Espere un momento por favor...' )
+
+  formData.value.id_usuario_autorizador = authStore.userData.id_usuario
+
+  api.post(`/Permiso/ActualizarPermiso/${route.params.id}/`, formData.value, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + authStore.inovatechUserData.accessToken,
+    }
+  }).then((response: { status: string | number; }) => {
+
+    // Esto es para dev mode.
+    if (response.status === 200 || response.status === 201) {
+      responseStatus.value = true
+      responseMessage.value = 'Respuesta enviada exitosamente'
+    } else {
+      responseMessage.value = responseMessage.value + response.status
+    }
+    $q.loading.hide()
+
+    // Esto es para experiencia del usuario.
+    showNotification(response.status === 200
+      ? 'Respuesa enviada exitosamente'
+      : 'Ocurrió un error: ' + response.status, response.status === 200
+      ? 'green' : 'red', [])
+
+    setTimeout(() => {
+      router.push(response.status === 201 || response.status === 200 ? '/' : '/')
+    }, 2000)
+  }).catch((error: string) => { // Para ambos y si hubo otro tipo de error.
+    showNotification('Ocurrió un error:  ' + error, 'red', [
+      {
+        label: 'Aceptar', color: 'white', handler: () => { /* ... */
+        }
+      }
+    ])
+    $q.loading.hide()
+  })
+}
 </script>
 

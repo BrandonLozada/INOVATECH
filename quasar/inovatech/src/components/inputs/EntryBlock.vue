@@ -76,10 +76,67 @@
            :model-value="modelValue"
            @input="$emit('update:modelValue', $event.target.value)"
            type="text"
-           mask="XXXXX"
+           mask="XXXXXXX"
            :hint="help_text"
            :name="label.toLowerCase().replace(' ', '_')"
-           :rules="required ? [val => !!val && val.length === 5 || `${label} es requerido`] : ''"
+           :rules="required ? [val => !!val && val.length === 7 || `${label} es requerido`] : ''"
+           v-bind="$attrs"
+  />
+  <!-- TODO: Meter estos cuatro tipos de campos en un solo componente.   -->
+  <q-input v-else-if="field_type === 'CURP'"
+           dense
+           outlined
+           color="dark"
+           :label="label"
+           :model-value="modelValue"
+           @input="$emit('update:modelValue', $event.target.value)"
+           type="text"
+           mask="XXXXXXXXXXXXXXXXXX"
+           :hint="help_text"
+           :name="label.toLowerCase().replace(' ', '_')"
+           :rules="required ? [val => !!val && val.length === 18 || `${label} es requerido`] : ''"
+           v-bind="$attrs"
+  />
+  <q-input v-else-if="field_type === 'RFC'"
+           dense
+           outlined
+           color="dark"
+           :label="label"
+           :model-value="modelValue"
+           @input="$emit('update:modelValue', $event.target.value)"
+           type="text"
+           mask="XXXXXXXXXXXXX"
+           :hint="help_text"
+           :name="label.toLowerCase().replace(' ', '_')"
+           :rules="required ? [val => !!val && val.length === 13 || `${label} es requerido`] : ''"
+           v-bind="$attrs"
+  />
+  <q-input v-else-if="field_type === 'NSS'"
+           dense
+           outlined
+           color="dark"
+           :label="label"
+           :model-value="modelValue"
+           @input="$emit('update:modelValue', $event.target.value)"
+           type="text"
+           mask="XXXXXXXXXXX"
+           :hint="help_text"
+           :name="label.toLowerCase().replace(' ', '_')"
+           :rules="required ? [val => !!val && val.length === 11 || `${label} es requerido`] : ''"
+           v-bind="$attrs"
+  />
+  <q-input v-else-if="field_type === 'INFONAVIT'"
+           dense
+           outlined
+           color="dark"
+           :label="label"
+           :model-value="modelValue"
+           @input="$emit('update:modelValue', $event.target.value)"
+           type="text"
+           mask="XXXXXXXXXX"
+           :hint="help_text"
+           :name="label.toLowerCase().replace(' ', '_')"
+           :rules="required ? [val => !!val && val.length === 10 || `${label} es requerido`] : ''"
            v-bind="$attrs"
   />
   <q-input v-else-if="field_type === 'password'"
@@ -102,20 +159,6 @@
       />
     </template>
   </q-input>
-<!--  <q-input v-else-if="field_type === 'password'"-->
-<!--           dense-->
-<!--           outlined-->
-<!--           color="dark"-->
-<!--           :label="label"-->
-<!--           :model-value="modelValue"-->
-<!--           @input="$emit('update:modelValue', $event.target.value)"-->
-<!--           type="password"-->
-<!--           :hint="help_text"-->
-<!--           :name="label.toLowerCase().replace(' ', '_')"-->
-<!--           :rules="required ? [isValidPassword] : ''"-->
-<!--           v-bind="$attrs"-->
-<!--  />-->
-  <!-- Entry Block -->
 </template>
 
 <script setup lang="ts">
@@ -126,6 +169,8 @@ export interface EntryBlockProps {
   help_text?: string;
   required?: boolean;
   showPassword?: boolean;
+  //length_field?: number;
+  // TODO: Agregar uno para la longitud de caracteres, length_field?: number.
 }
 withDefaults(defineProps<EntryBlockProps>(), {
   field_type: 'text',
