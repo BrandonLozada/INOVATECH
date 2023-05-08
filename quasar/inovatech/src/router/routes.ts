@@ -19,8 +19,8 @@ const routes: RouteRecordRaw[] = [
       //                           GESTIÓN - MIS DATOS
       // { path: 'my-user/:id', component: () => import('pages/UserInformation.vue') },
       { path: 'my-profile', component: () => import('pages/MyProfile.vue') },
-      { path: 'my-address', component: () => import('pages/MyAddress.vue') },
       { path: 'my-employee-info', component: () => import('pages/MyEmployeeInfo.vue') },
+      { path: 'my-address', component: () => import('pages/MyAddress.vue') },
 
       // Formulario ProfileEmployeeForm
       { path: 'forms/profile-employee', component: () => import('components/forms/ProfileEmployeeForm.vue') },

@@ -129,9 +129,6 @@
                         <q-btn no-caps type="submit" color="primary" label="Guardar"/>
                       </div>
                     </q-card-section>
-
-                    {{ formData }}
-
                   </q-form>
 
               </div>
