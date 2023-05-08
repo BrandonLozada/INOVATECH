@@ -10,7 +10,9 @@
         </div>
       </div>
 
+      <!-- TODO: Mandar todo a componente reutilizable.-->
       <q-card class="my-card col-12">
+        <!-- TODO: Simular la parte de obtención del perfil en ViewUserProfile, la parte del q-card, q-list, border, q-banner, etc.-->
         <q-item-label header class="text-black text-weight-regular"
                       style="font-weight: 500; font-size: 1rem; margin: 2px;">Datos personales
         </q-item-label>
@@ -24,6 +26,7 @@
           style="top: 0; right: 15px; transform: translateY(15px);"
         ></q-btn>
 
+        <!-- TODO: Moverlo a q-list -->
         <q-item v-if="myUserData.nombre_completo != null">
           <q-item-section class="col-3">
             <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
