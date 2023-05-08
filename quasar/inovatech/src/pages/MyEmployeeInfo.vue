@@ -12,17 +12,99 @@
 
       <q-card class="my-card col-12">
         <q-item-label header class="text-black text-weight-regular"
-                      style="font-weight: 500; font-size: 1rem; margin: 2px;">Información laboral
+                      style="font-weight: 500; font-size: 1rem; margin: 2px;">Información de identificación
         </q-item-label>
 
         <q-btn
-          to="crear-perfil"
+          to="forms/profile-employee"
           label="Editar"
           flat
           color="grey-7"
           class="absolute-top-right bg-grey-2"
           style="top: 0; right: 15px; transform: translateY(15px);"
         ></q-btn>
+
+        <div v-show="is_loading" class="q-gutter-md q-px-md q-mt-md">
+          <q-skeleton class="q-mb-md" style="height: 30px;"/>
+          <q-separator></q-separator>
+          <q-skeleton class="q-mb-md" style="height: 30px;"/>
+          <q-separator></q-separator>
+          <q-skeleton class="q-mb-md" style="height: 30px;"/>
+        </div>
+
+        <q-item v-if="myEmployeeProfileData.curp != null">
+          <q-item-section class="col-3">
+            <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
+              CURP
+            </q-item-label>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="q-mt-sm q-ml-lg text-grey-10"> {{ myEmployeeProfileData.curp }}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-separator class="q-ml-md"></q-separator>
+
+        <q-item v-if="myEmployeeProfileData.rfc != null">
+          <q-item-section class="col-3">
+            <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
+              RFC
+            </q-item-label>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="q-mt-sm q-ml-lg text-grey-10"> {{ myEmployeeProfileData.rfc }}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-separator class="q-ml-md"></q-separator>
+
+        <q-item v-if="myEmployeeProfileData.nss != null">
+          <q-item-section class="col-3">
+            <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
+              NSS
+            </q-item-label>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="q-mt-sm q-ml-lg text-grey-10"> {{ myEmployeeProfileData.nss }}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-separator class="q-ml-md"></q-separator>
+
+        <q-item v-if="myEmployeeProfileData.infonavit != null">
+          <q-item-section class="col-3">
+            <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
+              Infonavit
+            </q-item-label>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="q-mt-sm q-ml-lg text-grey-10"> {{ myEmployeeProfileData.infonavit }}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-separator class="q-ml-md"></q-separator>
+
+        <q-item v-if="myEmployeeProfileData.estado_civil != null">
+          <q-item-section class="col-3">
+            <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
+              Estado civil
+            </q-item-label>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="q-mt-sm q-ml-lg text-grey-10"> {{ myEmployeeProfileData.estado_civil }}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-separator class="q-ml-md"></q-separator>
+
+        <q-item-label header class="text-black text-weight-regular"
+                      style="font-weight: 500; font-size: 1rem; margin: 2px;">Información laboral
+        </q-item-label>
 
         <q-item v-if="myEmployeeProfileData.nomina != null">
           <q-item-section class="col-3">
@@ -38,6 +120,20 @@
 
         <q-separator class="q-ml-md"></q-separator>
 
+        <q-item v-if="myEmployeeProfileData.salario != null">
+          <q-item-section class="col-3">
+            <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
+              Salario/Sueldo mensual
+            </q-item-label>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="q-mt-sm q-ml-lg text-grey-10"> ${{ myEmployeeProfileData.salario }} pesos</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-separator class="q-ml-md"></q-separator>
+
         <q-item v-if="myEmployeeProfileData.fecha_ingreso != null">
           <q-item-section class="col-3">
             <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
@@ -47,6 +143,20 @@
 
           <q-item-section>
             <q-item-label class="q-mt-sm q-ml-lg text-grey-10">{{ myEmployeeProfileData.fecha_ingreso }}</q-item-label>
+          </q-item-section>
+        </q-item>
+
+        <q-separator class="q-ml-md"></q-separator>
+
+        <q-item v-if="myEmployeeProfileData.dias_descanso != null">
+          <q-item-section class="col-3">
+            <q-item-label caption class="q-mt-sm" style="font-weight: 500;">
+              Días otorgados
+            </q-item-label>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="q-mt-sm q-ml-lg text-grey-10"> {{ myEmployeeProfileData.dias_descanso }}</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -83,9 +193,7 @@
         </q-inner-loading>
 
         <div v-show="is_loading" class="q-gutter-md q-px-md q-mt-md">
-          <q-skeleton class="q-mb-md" style="height: 30px;"/>
-          <q-separator></q-separator>
-          <q-skeleton class="q-mb-md" style="height: 30px;"/>
+          <q-skeleton class="q-mb-md" style="height: 90px;"/>
           <q-separator></q-separator>
           <q-skeleton class="q-mb-md" style="height: 30px;"/>
           <q-separator></q-separator>

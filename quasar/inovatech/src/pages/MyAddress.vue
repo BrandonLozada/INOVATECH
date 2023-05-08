@@ -157,9 +157,7 @@
           <q-separator></q-separator>
           <q-skeleton class="q-mb-md" style="height: 30px;"/>
           <q-separator></q-separator>
-          <q-skeleton class="q-mb-md" style="height: 30px;"/>
-          <q-separator></q-separator>
-          <q-skeleton class="q-mb-md" style="height: 30px;"/>
+          <q-skeleton class="q-mb-md" style="height: 90px;"/>
           <q-separator></q-separator>
           <q-skeleton class="q-mb-md" style="height: 30px;"/>
           <q-separator></q-separator>
