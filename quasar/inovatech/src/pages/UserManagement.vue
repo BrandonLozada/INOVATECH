@@ -37,10 +37,32 @@
         </template>
 
         <template v-slot:body="props">
+
           <q-tr :props="props">
             <q-td auto-width>
-              <q-toggle v-model="props.expand" checked-icon="add" unchecked-icon="remove"></q-toggle>
+
+              <div class="q-gutter-x-sm">
+
+<!--              <q-toggle v-model="props.expand" checked-icon="add" unchecked-icon="remove"></q-toggle>-->
+
+                <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps" color="secondary" icon="pageview" size="16px" flat round dense/>
+
+                <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps" color="secondary" icon="edit" size="16px" flat round dense/>
+
+                <q-btn @click="deleteUser(props.row.id_usuario)" color="secondary" icon="delete" size="16px" flat round dense></q-btn>
+
+                <!--              <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps" color="secondary" icon="rate_review" size="16px" flat round dense/>-->
+
+              </div>
             </q-td>
+
+<!--            <q-td auto-width>-->
+<!--              <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps" color="secondary" icon="rate_review" size="md" flat dense/>-->
+<!--           </q-td>-->
+
+<!--            <q-td auto-width>-->
+<!--              <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps" color="secondary" icon="delete" size="md" flat dense/>-->
+<!--           </q-td>-->
 
             <q-td
               v-for="col in props.cols"
@@ -50,24 +72,23 @@
               {{ col.value }}
             </q-td>
 
-            <q-td auto-width>
-              <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps" color="secondary" icon="rate_review" size="md" flat dense/>
-           </q-td>
-
+<!--            <q-td auto-width>-->
+<!--              <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps" color="secondary" icon="edit" size="md" flat dense/>-->
+<!--           </q-td>-->
           </q-tr>
 
-          <q-tr v-show="props.expand" :props="props">
-            <q-td colspan="100%">
+<!--          <q-tr v-show="props.expand" :props="props">-->
+<!--            <q-td colspan="100%">-->
 
-              <div class="q-pl-lg">
-<!--                <div class="text-left">Motivo: {{ props.row.motivo }}.</div>-->
-<!--                <div v-if="props.row.observaciones != null" class="text-left">Observaciones: {{ props.row.observaciones }}.</div>-->
-<!--                <div class="text-left">Jefe autorizador: {{ props.row.nombre_usuario_autorizador }}.</div>-->
-<!--                <div class="text-left">Fecha de solicitud: {{ props.row.fecha_solicitud }}</div>-->
-              </div>
+<!--              <div class="q-pl-lg">-->
+<!--&lt;!&ndash;                <div class="text-left">Motivo: {{ props.row.motivo }}.</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div v-if="props.row.observaciones != null" class="text-left">Observaciones: {{ props.row.observaciones }}.</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="text-left">Jefe autorizador: {{ props.row.nombre_usuario_autorizador }}.</div>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="text-left">Fecha de solicitud: {{ props.row.fecha_solicitud }}</div>&ndash;&gt;-->
+<!--              </div>-->
 
-            </q-td>
-          </q-tr>
+<!--            </q-td>-->
+<!--          </q-tr>-->
 
 
         </template>
@@ -83,6 +104,7 @@ import {useRouter, useRoute} from 'vue-router'
 import {useQuasar} from 'quasar'
 import {api} from 'boot/axios'
 import {useAuthStore} from 'stores/auth';
+import {get} from "js-cookie";
 
 const $q = useQuasar()
 const router = useRouter()
@@ -95,43 +117,97 @@ const lstUsers = ref([]);
 const rows = ref([])
 const columns = ref()
 
+const showNotification = (
+  message: string,
+  color: string,
+  actions: {
+    label: string;
+    color: string;
+    handler: () => void
+  }[] | undefined) => {
+  $q.notify({
+    message: message,
+    color: color,
+    actions: actions
+  })
+}
+
+const showLoadingBar = (message: string) => {
+  $q.loading.show({
+    message: message
+  })
+}
+
+const deleteUser = (id_usuario: number) => {
+  // showLoadingBar('Estamos enviando la información. Espere un momento por favor...' )
+
+  api.delete(`/Usuario/EliminarUsuarioFisico/${id_usuario}/`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authStore.inovatechUserData.accessToken,
+      }
+    }
+  ).then(response => {
+    console.log('response', response)
+    // $q.loading.hide()
+
+    showNotification(response.status === 200
+      ? response.data.value
+      : 'Ocurrió un error: ' + response.status, response.status === 200
+      ? 'green' : 'red', [])
+
+    getUsers();
+
+  }).catch(error => {
+    console.log(error);
+    showNotification('Ocurrió un error' + error, 'red', [ { label: 'Aceptar', color: 'white', handler: () => { /* ... */} } ])
+    // $q.loading.hide()
+  })
+}
+
+const getUsers = () => {
+  api.get('/Usuario/ListarUsuario/',
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authStore.inovatechUserData.accessToken,
+      }
+    }
+  ).then(response => {
+    lstUsers.value = response.data.value;
+    console.log('lstUsers.value: ', lstUsers.value)
+    console.log('rows', rows.value)
+
+    is_loading.value = false
+
+    columns.value = [
+      {
+        name: 'name',
+        required: true,
+        label: 'ID',
+        align: 'left',
+        field: (row: { id_usuario: never; }) => row.id_usuario,
+        format: (val: never) => `${val}`,
+        sortable: true
+      },
+      {name: 'nombre_completo', align: 'left', label: 'Nombre completo', field: 'nombre_completo', sortable: true},
+      {name: 'correo', align: 'left', label: 'Correo', field: 'correo', sortable: true},
+      {name: 'rol', align: 'left', label: 'Rol', field: 'rol', sortable: true},
+      {name: 'activo', align: 'left', label: 'Activo', field: 'activo'},
+      {name: 'fecha_registro', align: 'left', label: 'Fecha registro ', field: 'fecha_registro', sortable: true},
+      // { name: 'fecha_registro', align: 'left', label: 'Fecha registro ', field: 'fecha_registro', sortable: true },
+    ]
+
+    rows.value = lstUsers.value
+    console.log('rows transformado', rows.value)
+  })
+}
+
 onMounted(() => {
   setTimeout(() => {
-    api.get('/Usuario/ListarUsuario/',
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + authStore.inovatechUserData.accessToken,
-        }
-      }
-    ).then(response => {
-      lstUsers.value = response.data.value;
-      console.log('lstUsers.value: ', lstUsers.value)
-      console.log('rows', rows.value)
+    getUsers()
 
-      is_loading.value = false
-
-      columns.value = [
-        {
-          name: 'name',
-          required: true,
-          label: 'ID',
-          align: 'left',
-          field: (row: { id_usuario: never; }) => row.id_usuario,
-          format: (val: never) => `${val}`,
-          sortable: true
-        },
-        { name: 'nombre_completo', align: 'left', label: 'Nombre completo', field: 'nombre_completo', sortable: true },
-        { name: 'correo', align: 'left', label: 'Correo', field: 'correo', sortable: true },
-        { name: 'rol', align: 'left', label: 'Rol', field: 'rol', sortable: true },
-        { name: 'activo', align: 'left', label: 'Activo', field: 'activo' },
-        { name: 'fecha_registro', align: 'left', label: 'Fecha registro ', field: 'fecha_registro', sortable: true },
-      ]
-
-      rows.value = lstUsers.value
-      console.log('rows transformado', rows.value)
-
-    })
   }, 1000)
 })
 </script>
@@ -142,20 +218,20 @@ onMounted(() => {
     highlight the sticky column on any browser window */
     max-width: 600px;
 
-    thead tr:last-child th:last-child {
+    thead tr:first-child th:first-child {
       /* bg color is important for th; just specify one */
       background-color: #fff;
     }
 
-     td:last-child {
-       background-color: #eef2f7;
+     td:first-child {
+       background-color: #f8f9fa;
        text-align: center !important;
      }
 
-     th:last-child,
-     td:last-child {
+     th:first-child,
+     td:first-child {
        position: sticky;
-       right: 0;
+       left: 0;
        z-index: 1;
        text-align: center !important;
      }
