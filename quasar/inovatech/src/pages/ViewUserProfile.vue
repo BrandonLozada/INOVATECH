@@ -114,15 +114,6 @@
                         style="font-weight: 500; font-size: 1rem; margin: 2px;">Perfil empleado
           </q-item-label>
 
-<!--          <q-btn v-if="myEmployeeProfileData == null"-->
-<!--            to="forms/profile-employee"-->
-<!--            label="Agregar"-->
-<!--            flat-->
-<!--            color="grey-7"-->
-<!--            class="absolute-top-right bg-grey-2"-->
-<!--            style="top: 0; right: 15px; transform: translateY(15px);"-->
-<!--          ></q-btn>-->
-
           <q-btn v-if="myEmployeeProfileData != null"
                  @click="router.push({'path':`/forms/profile-employee/${route.params.id}`})"
                  label="Editar"
@@ -281,22 +272,23 @@
             </q-item>
           </template>
 
-          <q-banner v-else
-          class="bg-grey-2 q-my-lg"
-          rounded>
-          <template v-slot:avatar>
-            <q-icon name="info_outline" color="primary" />
-          </template>
-          <div class="text-subtitle1">
-            No se encontró información relacionada con este perfil.
-          </div>
-          <template v-slot:action>
-            <q-btn flat outline color="primary"
-                   @click="router.push({'path':`/forms/profile-employee/${route.params.id}`})"
-                   label="Agregar" />
-          </template>
-        </q-banner>
-
+          <q-banner
+            v-else
+            class="bg-grey-2"
+            rounded
+          >
+            <template v-slot:avatar>
+              <q-icon name="info_outline" color="primary" />
+            </template>
+            <div class="text-subtitle1">
+              No se encontró información relacionada con este perfil.
+            </div>
+            <template v-slot:action>
+              <q-btn flat outline color="primary"
+                     @click="router.push({'path':`/forms/profile-employee/${route.params.id}`})"
+                     label="Agregar" />
+            </template>
+          </q-banner>
         </q-list>
 
         <q-inner-loading :showing="is_loading">
