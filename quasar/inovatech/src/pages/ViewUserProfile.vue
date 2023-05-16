@@ -103,12 +103,11 @@
           <q-skeleton class="q-mb-md" style="height: 30px;"/>
         </div>
 
-
       </q-card>
 
       <!-- Tarjeta del perfil de empleado -->
       <q-card class="my-card col-12 q-mb-lg">
-        <q-list separator>
+        <q-list v-show="!is_loading" separator>
 
           <q-item-label v-if="myEmployeeProfileData == null" header class="text-black text-weight-regular"
                         style="font-weight: 500; font-size: 1rem; margin: 2px;">Perfil empleado
@@ -122,14 +121,6 @@
                  class="absolute-top-right bg-grey-2"
                  style="top: 0; right: 15px; transform: translateY(15px);"
           ></q-btn>
-
-          <div v-show="is_loading" class="q-gutter-md q-px-md q-mt-md">
-            <q-skeleton class="q-mb-md" style="height: 30px;"/>
-            <q-separator></q-separator>
-            <q-skeleton class="q-mb-md" style="height: 30px;"/>
-            <q-separator></q-separator>
-            <q-skeleton class="q-mb-md" style="height: 30px;"/>
-          </div>
 
           <template v-if="myEmployeeProfileData != null">
                       <q-item-label header class="text-black text-weight-regular"
@@ -296,7 +287,17 @@
         </q-inner-loading>
 
         <div v-show="is_loading" class="q-gutter-md q-px-md q-mt-md">
+          <q-skeleton class="q-mb-md" style="height: 30px;"/>
+          <q-separator></q-separator>
+          <q-skeleton class="q-mb-md" style="height: 30px;"/>
+          <q-separator></q-separator>
+          <q-skeleton class="q-mb-md" style="height: 30px;"/>
+        </div>
+
+        <div v-show="is_loading" class="q-gutter-md q-px-md q-mt-md">
           <q-skeleton class="q-mb-md" style="height: 90px;"/>
+          <q-separator></q-separator>
+          <q-skeleton class="q-mb-md" style="height: 30px;"/>
           <q-separator></q-separator>
           <q-skeleton class="q-mb-md" style="height: 30px;"/>
           <q-separator></q-separator>
@@ -324,7 +325,6 @@ const route = useRoute()
 const authStore = useAuthStore()
 
 const is_loading = ref(true);
-const no_data = ref(true);
 
 const myUserData = ref<any>([]);
 const myEmployeeProfileData = ref<any>([]);
@@ -359,7 +359,7 @@ onBeforeMount(() => {
       })
   }, 1000)
 
-    setTimeout(() => {
+  setTimeout(() => {
     api.get(`/PerfilEmpleado/ListarPerfilEmpleado/${route.params.id}/`,
       {
         headers: {
@@ -368,21 +368,21 @@ onBeforeMount(() => {
         }
       }
       ).then(response => {
-        console.log('response: ', response)
+        console.log('response: ', response);
         myEmployeeProfileData.value = response.data.value;
-        console.log('myEmployeeProfileData: ', myEmployeeProfileData)
+        console.log('myEmployeeProfileData: ', myEmployeeProfileData);
 
-      if (response.data.value.length == 1) {
+        if (response.data.value.length == 1) {
           myEmployeeProfileData.value = response.data.value[0];
         } else {
           myEmployeeProfileData.value = null;
         }
       }).then(() => {
-        is_loading.value = false
+        is_loading.value = false;
       }).catch((myEmployeeProfileData) => {
         console.log('Error');
         myEmployeeProfileData.value = null;
-        console.log('CATCH', myEmployeeProfileData.value)
+        console.log('catch', myEmployeeProfileData.value)
       })
   }, 1000)
 })
