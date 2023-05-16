@@ -47,7 +47,7 @@
 
                 <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps" color="secondary" icon="pageview" size="16px" flat round dense/>
 
-                <q-btn @click="router.push({'path':`/user-profile/${props.row.id_usuario}`})" class="no-caps" color="secondary" icon="edit" size="16px" flat round dense/>
+                <q-btn @click="router.push({'path':`edit-user/${props.row.id_usuario}`})" class="no-caps" color="secondary" icon="edit" size="16px" flat round dense/>
 
                 <q-btn @click="deleteUser(props.row.id_usuario)" color="secondary" icon="delete" size="16px" flat round dense></q-btn>
 
@@ -104,7 +104,6 @@ import {useRouter, useRoute} from 'vue-router'
 import {useQuasar} from 'quasar'
 import {api} from 'boot/axios'
 import {useAuthStore} from 'stores/auth';
-import {get} from "js-cookie";
 
 const $q = useQuasar()
 const router = useRouter()

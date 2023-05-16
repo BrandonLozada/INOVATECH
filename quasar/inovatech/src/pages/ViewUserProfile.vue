@@ -18,7 +18,7 @@
         </q-item-label>
 
         <q-btn
-          to="/crear-perfil"
+          @click="router.push({'path':`/edit-user/${route.params.id}`})"
           label="Editar"
           flat
           color="grey-7"

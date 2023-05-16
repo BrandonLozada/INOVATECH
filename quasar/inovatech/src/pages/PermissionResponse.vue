@@ -208,7 +208,7 @@ import {event, useQuasar} from 'quasar'
 import {api} from 'boot/axios'
 import {useAuthStore} from 'stores/auth';
 import {useContextStore} from 'stores/SiteContextStore'
-import TextareaBlock from "components/inputs/TextareaBlock.vue";
+import TextareaBlock from 'components/inputs/TextareaBlock.vue';
 
 const $q = useQuasar()
 const router = useRouter()

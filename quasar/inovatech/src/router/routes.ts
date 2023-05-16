@@ -33,6 +33,8 @@ const routes: RouteRecordRaw[] = [
       // Formulario ProfileEmployeeForm -> Creación de perfil de empleado externo
       { path: 'forms/profile-employee/:id', component: () => import('components/forms/ProfileEmployeeForm.vue'), props: true },
 
+      {path: 'edit-user/:id', component: () => import('pages/EditUserDetails.vue'), props: true},
+
       // Visualización de un usuario
       { path: 'user-profile/:id', component: () => import('pages/ViewUserProfile.vue'), props: true },
 
