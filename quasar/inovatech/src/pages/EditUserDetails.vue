@@ -163,10 +163,10 @@ const authStore = useAuthStore()
 const siteContext = useContextStore()
 siteContext.currentPage = route.path
 
-const {stopAndPrevent} = event
-const submitResult = ref([])
-const responseStatus = ref(false)
-const responseMessage = ref('Error: ')
+// const {stopAndPrevent} = event
+// const submitResult = ref([])
+// const responseStatus = ref(false)
+// const responseMessage = ref('Error: ')
 
 const is_loading = ref(true)
 const showPassword = ref<boolean>(false);
@@ -229,7 +229,6 @@ const showLoadingBar = (message: string) => {
 onBeforeMount(() => {
   setTimeout(() => {
     api.get('/Rol/ListarTodo/').then(response => {
-      console.log('response.data', response.data);
       response.data.value.forEach(function (obj: { label: any; nombre: any; value: any; id_rol: any; }) {
         obj.label = obj.nombre
         delete obj.nombre
@@ -237,14 +236,11 @@ onBeforeMount(() => {
         delete obj.id_rol
       })
       rolesOptions.value = response.data.value
-      console.log('rolesOptions', rolesOptions.value)
     })
   }, 1000)
 })
 
 const editUserForm = () => {
-  console.log('Editando usuario')
-
   showLoadingBar('Estamos enviando la información. Espere un momento por favor...' )
 
   api.put(`/Usuario/ActualizarUsuario/${route.params.id}/`, formData.value, {
@@ -255,14 +251,14 @@ const editUserForm = () => {
   }).then((response) => {
     $q.loading.hide()
 
-    showNotification(response.status === 200
+    showNotification(response.status === 200 || response.status === 201
       ? response.data.value
-      : 'Ocurrió un error: ' + response.status, response.status === 200
+      : 'Ocurrió un error: ' + response.status, response.status === 200 || response.status === 201
       ? 'green' : 'red', [])
 
     setTimeout(() => {
       router.push(response.status === 201 || response.status === 200 ? '/user-management' : '/')
-    }, 2000)
+    }, 1000)
   }).catch((error: string) => {
     showNotification('Ocurrió un error' + error, 'red', [{label: 'Aceptar', color: 'white', handler: () => { /* ... */}}])
     $q.loading.hide()
@@ -282,10 +278,8 @@ onBeforeMount(() => {
         ).then(response => {
           is_loading.value = false;
           formData.value = response.data.value[0];
-          console.log('response: ', response);
-          console.log('formData: ', formData);
-      }).catch(() => {
-        console.log('Error')
+      }).catch((error: string) => {
+        console.log(error)
       })
     }
   }, 1000)

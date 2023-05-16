@@ -124,10 +124,10 @@ const authStore = useAuthStore()
 const siteContext = useContextStore()
 siteContext.currentPage = route.path
 
-const {stopAndPrevent} = event
-const submitResult = ref([])
-const responseStatus = ref(false)
-const responseMessage = ref('Error: ')
+// const {stopAndPrevent} = event
+// const submitResult = ref([])
+// const responseStatus = ref(false)
+// const responseMessage = ref('Error: ')
 
 const showPassword = ref<boolean>(false);
 const rolesOptions = ref([])
@@ -189,7 +189,6 @@ const showLoadingBar = (message: string) => {
 onBeforeMount(() => {
   setTimeout(() => {
     api.get('/Rol/ListarTodo/').then(response => {
-      console.log('response.data', response.data);
       response.data.value.forEach(function (obj: { label: any; nombre: any; value: any; id_rol: any; }) {
         obj.label = obj.nombre
         delete obj.nombre
@@ -197,13 +196,9 @@ onBeforeMount(() => {
         delete obj.id_rol
       })
       rolesOptions.value = response.data.value
-      console.log('rolesOptions', rolesOptions.value)
+    }).catch((reason: string) => {
+      console.log(reason)
     })
-
-  // api.get('/Rol/ListarTodo/').then(response => {
-  //   rolesOptions.value = response.data.value
-  //   console.log('rolesOptions', rolesOptions.value)
-  // }).catch(() => rolesOptions.value = null)
   }, 1000)
 })
 
@@ -215,29 +210,19 @@ const submitForm = () => {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + authStore.inovatechUserData.accessToken,
     }
-  }).then((response: { status: string | number; }) => {
-    if (response.status === 201) {
-      responseStatus.value = true
-      responseMessage.value = 'Respuesta enviada exitosamente!'
-    } else {
-      responseMessage.value = responseMessage.value + response.status
-    }
+  }).then((response) => {
     $q.loading.hide()
-    showNotification(response.status === 200
-      ? 'Usuario actualizado exitosamente'
-      : 'Ocurrió un error: ' + response.status, response.status === 200
+
+    showNotification(response.status === 200 || response.status === 201
+      ? response.data.value
+      : 'Ocurrió un error: ' + response.status, response.status === 200 || response.status === 201
       ? 'green' : 'red', [])
 
     setTimeout(() => {
       router.push(response.status === 201 || response.status === 200 ? '/user-management' : '/')
-    }, 2000)
+    }, 1000)
   }).catch((error: string) => {
-    showNotification('Ocurrió un error' + error, 'red', [
-      {
-        label: 'Aceptar', color: 'white', handler: () => { /* ... */
-        }
-      }
-    ])
+    showNotification('Ocurrió un error:' + error, 'red', [{label: 'Aceptar', color: 'white', handler: () => { /* ... */}}])
     $q.loading.hide()
   })
 }
