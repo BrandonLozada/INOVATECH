@@ -6,7 +6,7 @@ export interface UserProps {
   username: string;
   password: string;
 }
-
+// TODO: Separa los modelos por archivo como los DTO de la WEB API.
 export interface ProfileProps {
   first_name: string;
   first_surname: string;
